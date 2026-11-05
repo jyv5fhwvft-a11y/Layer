@@ -1,0 +1,1237 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interactive Knowledge Lexicon — Layer 3: Content and Data Architecture.">
+  <title>IKL | Layer 3 — Content and Data</title>
+
+  <style>
+    :root {
+      --navy: #142b4a;
+      --blue: #2463eb;
+      --light-blue: #edf4ff;
+      --teal: #0d9488;
+      --amber: #d97706;
+      --background: #f4f7fb;
+      --surface: #ffffff;
+      --text: #263449;
+      --muted: #64748b;
+      --border: #dce4ef;
+      --radius: 14px;
+      --shadow: 0 5px 20px rgba(20, 43, 74, 0.07);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.7;
+    }
+
+    a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #142b4a, #2457a6);
+      color: white;
+      padding: 58px 22px;
+      text-align: center;
+    }
+
+    .hero .eyebrow {
+      color: #c6dcff;
+      font-size: 0.85rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      max-width: 900px;
+      margin: 14px auto;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.2;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 14px auto;
+      color: #e3edff;
+      font-size: 1.05rem;
+    }
+
+    .hero .version {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 7px 15px;
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 30px;
+      font-size: 0.85rem;
+    }
+
+    .container {
+      width: min(1100px, 92%);
+      margin: 32px auto;
+    }
+
+    .notice {
+      padding: 20px;
+      background: var(--light-blue);
+      border-left: 5px solid var(--blue);
+      border-radius: 8px;
+      margin-bottom: 25px;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 4px 11px;
+      border-radius: 20px;
+      background: #d9f4ed;
+      color: #087568;
+      font-size: 0.8rem;
+      font-weight: bold;
+      margin-right: 5px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 25px;
+      align-items: start;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 15px;
+      padding: 22px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .sidebar h2 {
+      margin-top: 0;
+      color: var(--navy);
+      font-size: 1.1rem;
+    }
+
+    .sidebar ol {
+      padding-left: 20px;
+      margin-bottom: 0;
+    }
+
+    .sidebar li {
+      margin: 7px 0;
+      font-size: 0.88rem;
+    }
+
+    main {
+      min-width: 0;
+    }
+
+    .section {
+      padding: 28px;
+      margin-bottom: 22px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      scroll-margin-top: 20px;
+    }
+
+    .section h2 {
+      margin-top: 0;
+      color: var(--navy);
+      font-size: 1.5rem;
+    }
+
+    .section h3 {
+      margin-top: 25px;
+      color: #2457a6;
+      font-size: 1.08rem;
+    }
+
+    .section-number {
+      margin-right: 8px;
+      color: var(--blue);
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+
+    .callout {
+      margin: 18px 0;
+      padding: 16px 18px;
+      background: #f0fdfa;
+      border-left: 4px solid var(--teal);
+      border-radius: 7px;
+    }
+
+    .warning {
+      background: #fff8eb;
+      border-left-color: var(--amber);
+    }
+
+    .principle-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .principle {
+      padding: 17px;
+      background: #f7f9fd;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .principle strong {
+      display: block;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin: 18px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 520px;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--light-blue);
+      color: var(--navy);
+    }
+
+    pre {
+      overflow-x: auto;
+      padding: 18px;
+      background: #142b4a;
+      color: #e5efff;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+
+    code {
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    .approval {
+      padding: 22px;
+      background: #f0fdfa;
+      border: 1px solid #b8e9df;
+      border-radius: 12px;
+    }
+
+    footer {
+      margin-top: 45px;
+      padding: 30px 20px;
+      background: var(--navy);
+      color: white;
+      text-align: center;
+    }
+
+    footer p {
+      margin: 5px;
+    }
+
+    footer .tagline {
+      color: #c6dcff;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 800px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+        max-height: none;
+      }
+
+      .section {
+        padding: 21px;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      .hero {
+        background: white;
+        color: var(--navy);
+        border-bottom: 2px solid var(--navy);
+      }
+
+      .hero p, .hero .eyebrow {
+        color: var(--navy);
+      }
+
+      .layout {
+        display: block;
+      }
+
+      .sidebar {
+        position: static;
+        max-height: none;
+        box-shadow: none;
+      }
+
+      .section {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+
+      a {
+        color: inherit;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="hero">
+    <div class="eyebrow">Interactive Knowledge Lexicon</div>
+    <h1>Layer 3 — Content and Data</h1>
+    <p>
+      The architecture governing how IKL stores, identifies,
+      organises, connects, validates and publishes knowledge.
+    </p>
+    <span class="version">Edition 1.0 · Approved Architecture</span>
+  </header>
+
+  <div class="container">
+
+    <div class="notice">
+      <strong>Document purpose:</strong>
+      This document establishes the authoritative content and data
+      architecture for IKL. It explains how concept information is
+      organised independently from the code that presents it.
+      <br><br>
+      <span class="status">Approved architecture decisions</span>
+      <span class="status">Implementation remains separate</span>
+    </div>
+
+    <div class="layout">
+
+      <nav class="sidebar" aria-label="Document contents">
+        <h2>Contents</h2>
+        <ol>
+          <li><a href="#s1">Purpose and Objectives</a></li>
+          <li><a href="#s2">Scope of Layer 3</a></li>
+          <li><a href="#s3">Core Data Architecture</a></li>
+          <li><a href="#s4">Authoritative Concept JSON</a></li>
+          <li><a href="#s5">The Central Concept Registry</a></li>
+          <li><a href="#s6">Permanent Concept Identity</a></li>
+          <li><a href="#s7">15-Section Content Schema</a></li>
+          <li><a href="#s8">Concept Relationships</a></li>
+          <li><a href="#s9">Shared Knowledge Resources</a></li>
+          <li><a href="#s10">Content and Schema Versioning</a></li>
+          <li><a href="#s11">Publication Status</a></li>
+          <li><a href="#s12">Content and Configuration</a></li>
+          <li><a href="#s13">Validation and Completeness</a></li>
+          <li><a href="#s14">Relationship with Page Rendering</a></li>
+          <li><a href="#s15">Proposed Data Organisation</a></li>
+          <li><a href="#s16">Quality and Governance</a></li>
+          <li><a href="#s17">Relationship Between Layers</a></li>
+          <li><a href="#s18">Implementation Boundaries</a></li>
+          <li><a href="#s19">Approval and Next Milestone</a></li>
+        </ol>
+      </nav>
+
+      <main>
+
+        <section class="section" id="s1">
+          <h2><span class="section-number">01</span>Purpose and Objectives</h2>
+
+          <p>
+            Layer 3 defines how the educational knowledge inside the
+            Interactive Knowledge Lexicon is stored, identified,
+            organised, connected and maintained.
+          </p>
+
+          <p>
+            It establishes a structured content system so that every
+            concept can be managed consistently and presented through
+            the reusable architecture defined in Layer 2.
+          </p>
+
+          <h3>Primary objectives</h3>
+          <ul>
+            <li>Establish one authoritative data source for each concept.</li>
+            <li>Give every concept a permanent identity.</li>
+            <li>Maintain a central registry of all concepts.</li>
+            <li>Represent relationships between concepts consistently.</li>
+            <li>Separate shared educational resources from individual concepts.</li>
+            <li>Distinguish content versions from schema versions.</li>
+            <li>Validate content before publication.</li>
+            <li>Separate educational information from application code.</li>
+          </ul>
+
+          <div class="callout">
+            <strong>Core principle:</strong>
+            IKL must have a reliable source of truth for its knowledge.
+            A concept's content should not be scattered across multiple
+            page files or duplicated in unrelated parts of the application.
+          </div>
+        </section>
+
+        <section class="section" id="s2">
+          <h2><span class="section-number">02</span>Scope of Layer 3</h2>
+
+          <p>
+            Layer 3 governs the structure and management of educational
+            content and its supporting data.
+          </p>
+
+          <h3>Included responsibilities</h3>
+          <ul>
+            <li>Individual concept data files.</li>
+            <li>Central concept registry.</li>
+            <li>Permanent concept identifiers and slugs.</li>
+            <li>Concept categories and publication status.</li>
+            <li>Concept relationships.</li>
+            <li>Shared glossary, references and common examples.</li>
+            <li>Content schema and content versioning.</li>
+            <li>Completeness and structural validation.</li>
+            <li>Selective component configuration.</li>
+          </ul>
+
+          <h3>Outside the scope of this layer</h3>
+          <ul>
+            <li>Learner-experience strategy, governed by Layer 1.</li>
+            <li>Concept-page presentation, governed by Layer 2.</li>
+            <li>Shared application behaviour, governed by Layer 4.</li>
+            <li>Testing automation and publishing processes, governed by Layer 5.</li>
+          </ul>
+        </section>
+
+        <section class="section" id="s3">
+          <h2><span class="section-number">03</span>Core Data Architecture</h2>
+
+          <p>
+            IKL uses a structured data architecture in which individual
+            concepts are maintained independently and coordinated through
+            a central registry.
+          </p>
+
+          <div class="principle-grid">
+            <div class="principle">
+              <strong>Concept JSON</strong>
+              The authoritative structured content for an individual concept.
+            </div>
+            <div class="principle">
+              <strong>Concept registry</strong>
+              The central index of concepts and their identities.
+            </div>
+            <div class="principle">
+              <strong>Relationship data</strong>
+              Defines how concepts connect to one another.
+            </div>
+            <div class="principle">
+              <strong>Shared resources</strong>
+              Stores reusable glossary entries, references and examples.
+            </div>
+            <div class="principle">
+              <strong>Schema definition</strong>
+              Establishes the required structure of concept data.
+            </div>
+            <div class="principle">
+              <strong>Validation rules</strong>
+              Checks completeness, consistency and publication readiness.
+            </div>
+          </div>
+
+          <h3>High-level data flow</h3>
+          <pre><code>Individual Concept JSON
+          |
+          v
+   Concept Registry
+          |
+          v
+ Relationship and Shared Data
+          |
+          v
+   Validation Rules
+          |
+          v
+  Layer 2 Page Renderer
+          |
+          v
+  Learner-facing Concept Page</code></pre>
+
+          <p>
+            This is a logical architecture diagram. It describes
+            responsibilities and data flow, not a requirement to create
+            these exact files immediately.
+          </p>
+        </section>
+
+        <section class="section" id="s4">
+          <h2><span class="section-number">04</span>Authoritative Concept JSON</h2>
+
+          <p>
+            Each concept must have an individual structured JSON record.
+            This record is the authoritative source for that concept's
+            educational content and declared presentation configuration.
+          </p>
+
+          <h3>Why individual concept files?</h3>
+          <ul>
+            <li>Concepts can be created and maintained independently.</li>
+            <li>Content changes do not require rewriting the page template.</li>
+            <li>Validation can be performed concept by concept.</li>
+            <li>Concepts can be reused in different parts of IKL.</li>
+            <li>Content remains separate from application code.</li>
+          </ul>
+
+          <h3>Illustrative concept record</h3>
+          <pre><code>{
+  "id": "IKL-NET-0001",
+  "name": "Ping",
+  "slug": "ping",
+  "category": "Computer Networking",
+  "contentVersion": "1.0.0",
+  "schemaVersion": "1.0",
+  "publicationStatus": "published",
+
+  "sections": {
+    "conceptIdentity": {},
+    "firstGraderExplanation": {},
+    "analogy": {},
+    "beginnerExplanation": {},
+    "technicalExplanation": {},
+    "componentsArchitecture": {},
+    "workingMechanism": {},
+    "interactiveSimulation": {},
+    "flowchartSequence": {},
+    "practicalExample": {},
+    "misconceptions": {},
+    "limitationsTroubleshooting": {},
+    "conceptConnections": {},
+    "knowledgeAssessment": {},
+    "quickRevision": {}
+  }
+}</code></pre>
+
+          <div class="callout warning">
+            This is an illustrative structural example, not a completed
+            production schema. Exact field definitions, data types and
+            validation rules belong in the formal schema specification.
+          </div>
+        </section>
+
+        <section class="section" id="s5">
+          <h2><span class="section-number">05</span>The Central Concept Registry</h2>
+
+          <p>
+            IKL must maintain a central registry that acts as the
+            authoritative index of its concepts.
+          </p>
+
+          <p>
+            The registry allows the application to discover concepts
+            without searching through individual page files manually.
+          </p>
+
+          <h3>Required registry information</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Field</th>
+                  <th>Purpose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Permanent ID</td>
+                  <td>Uniquely identifies a concept over time.</td>
+                </tr>
+                <tr>
+                  <td>Name</td>
+                  <td>Provides the learner-facing concept name.</td>
+                </tr>
+                <tr>
+                  <td>Slug</td>
+                  <td>Provides a stable URL-friendly identifier.</td>
+                </tr>
+                <tr>
+                  <td>Category</td>
+                  <td>Places the concept within a subject area.</td>
+                </tr>
+                <tr>
+                  <td>Publication status</td>
+                  <td>Identifies whether the concept is a draft, review item or published entry.</td>
+                </tr>
+                <tr>
+                  <td>Content path</td>
+                  <td>Locates the authoritative concept data file.</td>
+                </tr>
+                <tr>
+                  <td>Content version</td>
+                  <td>Identifies the version of the educational content.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>What the registry powers</h3>
+          <ul>
+            <li>Homepage concept discovery.</li>
+            <li>Category listings.</li>
+            <li>Search results.</li>
+            <li>Concept navigation.</li>
+            <li>Related-concept discovery.</li>
+            <li>Publication monitoring.</li>
+          </ul>
+
+          <div class="callout">
+            <strong>Important distinction:</strong>
+            The registry tells IKL which concepts exist and where their
+            content is located. It does not replace the detailed
+            educational content inside each concept record.
+          </div>
+        </section>
+
+        <section class="section" id="s6">
+          <h2><span class="section-number">06</span>Permanent Concept Identity</h2>
+
+          <p>
+            Every concept must receive a permanent identifier that
+            remains stable even if its display name, category or
+            URL-friendly slug changes.
+          </p>
+
+          <h3>Identity principles</h3>
+          <ul>
+            <li>Every concept has one unique permanent ID.</li>
+            <li>Permanent IDs must not be reused for another concept.</li>
+            <li>Display names may change without changing the permanent ID.</li>
+            <li>Slugs must be managed consistently.</li>
+            <li>References between concepts should use permanent IDs.</li>
+          </ul>
+
+          <h3>Illustrative identity</h3>
+          <pre><code>Permanent ID: IKL-NET-0001
+Name: Ping
+Slug: ping
+Category: Computer Networking</code></pre>
+
+          <p>
+            The permanent ID is the concept's identity. The name and
+            slug are descriptive identifiers that may be updated under
+            controlled rules.
+          </p>
+        </section>
+
+        <section class="section" id="s7">
+          <h2><span class="section-number">07</span>The Approved 15-Section Content Schema</h2>
+
+          <p>
+            Each concept's educational content follows the approved
+            teaching structure established in Layer 2.
+          </p>
+
+          <ol>
+            <li>Concept Identity and Definition</li>
+            <li>First-Grader Explanation</li>
+            <li>Analogy and Mental Model</li>
+            <li>Beginner Explanation</li>
+            <li>Technical Explanation</li>
+            <li>Components and Architecture</li>
+            <li>Working Mechanism</li>
+            <li>Interactive Simulation</li>
+            <li>Flowchart and Sequence Diagram</li>
+            <li>Practical Example</li>
+            <li>Common Mistakes and Misconceptions</li>
+            <li>Limitations and Troubleshooting</li>
+            <li>Connections to Other Concepts</li>
+            <li>Knowledge Assessment</li>
+            <li>Quick Revision</li>
+          </ol>
+
+          <h3>Schema principles</h3>
+          <ul>
+            <li>Every concept uses the same overall section model.</li>
+            <li>Each section has a defined purpose and expected data structure.</li>
+            <li>Section content is adapted to the subject being taught.</li>
+            <li>Required and optional fields are explicitly distinguished.</li>
+            <li>Missing required information must be detectable through validation.</li>
+          </ul>
+
+          <div class="callout">
+            A consistent schema does not mean identical content.
+            Ping, Process and Encryption should follow the same teaching
+            structure while using their own relevant examples, diagrams
+            and simulations.
+          </div>
+        </section>
+
+        <section class="section" id="s8">
+          <h2><span class="section-number">08</span>Concept Relationships</h2>
+
+          <p>
+            IKL must represent relationships between concepts through
+            four defined relationship types.
+          </p>
+
+          <div class="principle-grid">
+            <div class="principle">
+              <strong>Prerequisite</strong>
+              A concept the learner should understand before studying another.
+            </div>
+            <div class="principle">
+              <strong>Related</strong>
+              A concept that shares a meaningful subject or connection.
+            </div>
+            <div class="principle">
+              <strong>Contrast</strong>
+              A concept that helps explain differences between ideas.
+            </div>
+            <div class="principle">
+              <strong>Application</strong>
+              A concept that demonstrates where or how another concept is used.
+            </div>
+          </div>
+
+          <h3>Relationship rules</h3>
+          <ul>
+            <li>Relationships must refer to valid permanent concept IDs.</li>
+            <li>Each relationship must have one of the four approved types.</li>
+            <li>Broken or unknown references must be detected.</li>
+            <li>Relationships should have a meaningful educational purpose.</li>
+            <li>Prerequisite relationships should support a sensible learning progression.</li>
+          </ul>
+
+          <h3>Illustrative relationship record</h3>
+          <pre><code>{
+  "conceptId": "IKL-NET-0001",
+  "relationships": [
+    {
+      "type": "prerequisite",
+      "targetId": "IKL-NET-0002"
+    },
+    {
+      "type": "related",
+      "targetId": "IKL-NET-0003"
+    },
+    {
+      "type": "contrast",
+      "targetId": "IKL-NET-0004"
+    },
+    {
+      "type": "application",
+      "targetId": "IKL-NET-0005"
+    }
+  ]
+}</code></pre>
+
+          <p>
+            The IDs above are illustrative. They do not assert that
+            these particular concept relationships have been established.
+          </p>
+        </section>
+
+        <section class="section" id="s9">
+          <h2><span class="section-number">09</span>Shared Knowledge Resources</h2>
+
+          <p>
+            Some educational information is useful across multiple
+            concepts. Such information should not need to be duplicated
+            independently in every concept file.
+          </p>
+
+          <h3>Three shared resource groups</h3>
+          <ul>
+            <li><strong>Shared glossary:</strong> reusable definitions of technical terms.</li>
+            <li><strong>Shared references:</strong> sources used to support and verify educational content.</li>
+            <li><strong>Common examples:</strong> reusable practical examples where appropriate.</li>
+          </ul>
+
+          <h3>Shared-resource principles</h3>
+          <ul>
+            <li>Shared resources should have identifiable records.</li>
+            <li>Concepts should reference shared resources rather than copy them unnecessarily.</li>
+            <li>Shared content must be maintained consistently.</li>
+            <li>References must be traceable to the content they support.</li>
+            <li>Concept-specific explanations should remain in the concept record.</li>
+          </ul>
+
+          <div class="callout">
+            Shared resources reduce duplication. They do not prevent
+            a concept from explaining a term in its own educational context.
+          </div>
+        </section>
+
+        <section class="section" id="s10">
+          <h2><span class="section-number">10</span>Content and Schema Versioning</h2>
+
+          <p>
+            IKL must distinguish between two different kinds of change:
+            changes to educational content and changes to the structure
+            used to organise that content.
+          </p>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Version type</th>
+                  <th>What it represents</th>
+                  <th>Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Content version</td>
+                  <td>Changes to the information or teaching material of a concept.</td>
+                  <td>Ping explanation improved from 1.0.0 to 1.1.0.</td>
+                </tr>
+                <tr>
+                  <td>Schema version</td>
+                  <td>Changes to the structure or rules of concept data.</td>
+                  <td>A new required field is introduced into the concept schema.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Versioning principles</h3>
+          <ul>
+            <li>Content version and schema version must be stored separately.</li>
+            <li>A content edit must not automatically imply a schema change.</li>
+            <li>A schema change must be identifiable independently.</li>
+            <li>Compatibility and migration requirements must be considered when schemas change.</li>
+            <li>Version information must be available for validation and maintenance.</li>
+          </ul>
+
+          <div class="callout">
+            <strong>Why this matters:</strong>
+            IKL must be able to improve the explanation of Ping without
+            confusing that edit with a change to the structure used by
+            every concept.
+          </div>
+        </section>
+
+        <section class="section" id="s11">
+          <h2><span class="section-number">11</span>Publication Status</h2>
+
+          <p>
+            Every concept must have an explicit publication status.
+            The application must not assume that every concept record
+            is ready for public learning.
+          </p>
+
+          <h3>Publication-status principles</h3>
+          <ul>
+            <li>A concept's status must be recorded in the registry.</li>
+            <li>Publication status must be distinguishable from content version.</li>
+            <li>Draft content must not be mistaken for approved public content.</li>
+            <li>Publication must depend on the required quality checks.</li>
+            <li>Search and discovery must respect the concept's publication status.</li>
+          </ul>
+
+          <h3>Illustrative status values</h3>
+          <pre><code>draft
+in_review
+published
+archived</code></pre>
+
+          <p>
+            These labels illustrate a possible status vocabulary.
+            The exact transition rules and permissions belong in the
+            detailed governance and publishing specifications.
+          </p>
+        </section>
+
+        <section class="section" id="s12">
+          <h2><span class="section-number">12</span>Content and Configuration</h2>
+
+          <p>
+            Concept content and application code must remain separate.
+            JSON records describe educational information and may
+            selectively declare which supported components a concept uses.
+          </p>
+
+          <h3>Responsibilities</h3>
+          <ul>
+            <li>JSON stores structured concept information.</li>
+            <li>JSON may declare supported component configuration.</li>
+            <li>Application code interprets those declarations.</li>
+            <li>Component engines determine how declared components behave.</li>
+            <li>Concept content must not contain executable application logic.</li>
+          </ul>
+
+          <h3>Illustrative component configuration</h3>
+          <pre><code>{
+  "componentConfiguration": {
+    "interactiveSimulation": {
+      "enabled": true,
+      "componentType": "network-ping-simulation"
+    },
+    "flowchart": {
+      "enabled": true,
+      "format": "mermaid"
+    }
+  }
+}</code></pre>
+
+          <div class="callout warning">
+            A configuration declaration does not create the component
+            engine. The application must already support the declared
+            component type and validate its configuration.
+          </div>
+        </section>
+
+        <section class="section" id="s13">
+          <h2><span class="section-number">13</span>Validation and Completeness</h2>
+
+          <p>
+            Structured content must be checked before it is treated
+            as ready for publication. Validation protects IKL from
+            incomplete, inconsistent or disconnected knowledge records.
+          </p>
+
+          <h3>Required validation areas</h3>
+
+          <div class="principle-grid">
+            <div class="principle">
+              <strong>Schema validation</strong>
+              Checks that concept data follows the required structure.
+            </div>
+            <div class="principle">
+              <strong>Completeness checks</strong>
+              Detects missing required sections or information.
+            </div>
+            <div class="principle">
+              <strong>Registry checks</strong>
+              Confirms registry entries point to valid concept records.
+            </div>
+            <div class="principle">
+              <strong>Relationship checks</strong>
+              Detects broken or unknown concept references.
+            </div>
+            <div class="principle">
+              <strong>Resource checks</strong>
+              Detects missing shared glossary entries and references.
+            </div>
+            <div class="principle">
+              <strong>Publication checks</strong>
+              Confirms required conditions are met before publication.
+            </div>
+          </div>
+
+          <h3>Examples of errors to detect</h3>
+          <ul>
+            <li>A registry entry points to a missing JSON file.</li>
+            <li>Two concepts accidentally use the same permanent ID.</li>
+            <li>A concept is missing a required teaching section.</li>
+            <li>A relationship points to a concept that does not exist.</li>
+            <li>A declared component type is unsupported.</li>
+            <li>A required shared resource cannot be found.</li>
+            <li>A published concept fails its required validation rules.</li>
+          </ul>
+
+          <div class="callout">
+            <strong>Publication principle:</strong>
+            The existence of a JSON file is not proof that a concept is
+            complete. Completeness and validity must be checked explicitly.
+          </div>
+        </section>
+
+        <section class="section" id="s14">
+          <h2><span class="section-number">14</span>Relationship with Page Rendering</h2>
+
+          <p>
+            Layer 3 supplies structured information. Layer 2 determines
+            how that information is presented to learners.
+          </p>
+
+          <h3>Separation of responsibilities</h3>
+          <ul>
+            <li>Layer 3 maintains the authoritative concept content.</li>
+            <li>Layer 2 defines the concept page and teaching presentation.</li>
+            <li>Layer 4 supplies shared functionality used by the application.</li>
+            <li>Rendered pages display the content but do not become its authoritative source.</li>
+          </ul>
+
+          <h3>Authoritative data flow</h3>
+          <pre><code>Authoritative Concept JSON
+          |
+          v
+     Data Validation
+          |
+          v
+  Concept Page Renderer
+          |
+          v
+    Generated HTML
+          |
+          v
+   Learner Experience</code></pre>
+
+          <div class="callout warning">
+            <strong>Critical rule:</strong>
+            Generated HTML is output, not the authoritative content source.
+            If a generated page needs correction, the authoritative data
+            and relevant rendering logic must be corrected rather than
+            treating the generated HTML as the master record.
+          </div>
+        </section>
+
+        <section class="section" id="s15">
+          <h2><span class="section-number">15</span>Proposed Data Organisation</h2>
+
+          <p>
+            The following illustrates a possible future organisation
+            for Layer 3 data. It is a target architecture example,
+            not an instruction to restructure the current repository.
+          </p>
+
+          <pre><code>interactive-knowledge-lexicon/
+|
+|-- content/
+|   |
+|   |-- concepts/
+|   |   |-- ping.json
+|   |   |-- process.json
+|   |   |-- api.json
+|   |   |-- encryption.json
+|   |
+|   |-- registry/
+|   |   |-- concepts.json
+|   |
+|   |-- shared/
+|   |   |-- glossary.json
+|   |   |-- references.json
+|   |   |-- examples.json
+|   |
+|   |-- schemas/
+|       |-- concept.schema.json
+|
+|-- documentation/
+|   |-- layer-1.html
+|   |-- layer-2.html
+|   |-- layer-3.html
+|
+|-- index.html
+|-- css/
+|-- js/</code></pre>
+
+          <h3>Organisation principles</h3>
+          <ul>
+            <li>Individual concepts are stored independently.</li>
+            <li>The registry is maintained centrally.</li>
+            <li>Shared resources are separated from concept-specific content.</li>
+            <li>Schema definitions are separated from content records.</li>
+            <li>Documentation is distinguishable from live application data.</li>
+          </ul>
+
+          <div class="callout warning">
+            This is an illustrative target structure only. The existing
+            working GitHub repository must not be moved, renamed or
+            reorganised without a separate implementation decision.
+          </div>
+        </section>
+
+        <section class="section" id="s16">
+          <h2><span class="section-number">16</span>Quality and Governance</h2>
+
+          <p>
+            Content governance ensures that the knowledge base remains
+            reliable as the number of concepts grows.
+          </p>
+
+          <h3>Governance principles</h3>
+          <ul>
+            <li>Every concept has a permanent identity.</li>
+            <li>Every concept has one authoritative content record.</li>
+            <li>Changes are reflected in the appropriate version.</li>
+            <li>Relationships are traceable and valid.</li>
+            <li>Shared resources are maintained consistently.</li>
+            <li>Publication status is explicit.</li>
+            <li>Validation results inform publication readiness.</li>
+            <li>Content changes should not silently break existing concepts.</li>
+          </ul>
+
+          <h3>Long-term maintainability</h3>
+          <p>
+            The architecture must support the addition of many concepts
+            without requiring a separate page implementation for every
+            new topic. It must also support controlled improvements to
+            existing content and the schema itself.
+          </p>
+        </section>
+
+        <section class="section" id="s17">
+          <h2><span class="section-number">17</span>Relationship Between the Five Layers</h2>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Layer</th>
+                  <th>Responsibility</th>
+                  <th>Relationship to Layer 3</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Layer 1</td>
+                  <td>Learner Experience</td>
+                  <td>Defines what the learner should be able to discover and experience.</td>
+                </tr>
+                <tr>
+                  <td>Layer 2</td>
+                  <td>Concept Page and Template</td>
+                  <td>Consumes structured content and presents it through reusable pages.</td>
+                </tr>
+                <tr>
+                  <td>Layer 3</td>
+                  <td>Content and Data</td>
+                  <td>Maintains authoritative knowledge and its relationships.</td>
+                </tr>
+                <tr>
+                  <td>Layer 4</td>
+                  <td>Shared Functionality</td>
+                  <td>Provides shared behaviour that reads and uses the data.</td>
+                </tr>
+                <tr>
+                  <td>Layer 5</td>
+                  <td>Quality, Automation and Publishing</td>
+                  <td>Validates and supports reliable delivery of content and application changes.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Layer 3 is the knowledge foundation. It ensures that the
+            information presented by IKL has a consistent structure,
+            identifiable source and maintainable relationships.
+          </p>
+        </section>
+
+        <section class="section" id="s18">
+          <h2><span class="section-number">18</span>Implementation Boundaries</h2>
+
+          <p>
+            Approval of the Layer 3 architecture establishes the
+            governing content and data direction. It does not
+            automatically authorise changes to the existing GitHub
+            repository.
+          </p>
+
+          <h3>Implementation controls</h3>
+          <ul>
+            <li>Do not restructure existing files without approval.</li>
+            <li>Do not migrate current concept content without approval.</li>
+            <li>Do not replace working HTML pages without approval.</li>
+            <li>Do not introduce a new data framework without approval.</li>
+            <li>Do not treat illustrative JSON examples as production files.</li>
+            <li>Explain the purpose and consequences of each implementation step.</li>
+            <li>Preserve working functionality while planning improvements.</li>
+          </ul>
+
+          <div class="callout warning">
+            Architecture approval and implementation authorisation
+            are separate decisions. The approved architecture guides
+            future work; it does not grant automatic permission to
+            alter the live repository.
+          </div>
+        </section>
+
+        <section class="section" id="s19">
+          <h2><span class="section-number">19</span>Approval and Next Milestone</h2>
+
+          <div class="approval">
+            <h3>Layer 3 — Content and Data</h3>
+            <p><strong>Edition:</strong> 1.0</p>
+            <p><strong>Project:</strong> Interactive Knowledge Lexicon</p>
+            <p><strong>Architecture decisions:</strong> Approved and carried forward from the prior Layer 3 decision process.</p>
+            <p>
+              <strong>Governing principles:</strong>
+              Authoritative concept JSON, central registry, permanent
+              concept IDs, four relationship types, shared resources,
+              separate content and schema versions, explicit publication
+              status, selective component configuration and validation.
+            </p>
+            <p>
+              <strong>Implementation status:</strong>
+              This document records the architecture. It does not
+              authorise repository restructuring or implementation.
+            </p>
+          </div>
+
+          <h3>Layer 3 completion criteria</h3>
+          <ul>
+            <li>Every concept has an authoritative structured record.</li>
+            <li>The central registry identifies and locates concepts.</li>
+            <li>Permanent IDs support stable relationships.</li>
+            <li>The approved 15-section structure is represented.</li>
+            <li>Shared resources are maintained separately.</li>
+            <li>Content and schema versions are distinguishable.</li>
+            <li>Publication status is explicit.</li>
+            <li>Validation detects incomplete and inconsistent data.</li>
+            <li>Content remains separate from presentation and application code.</li>
+          </ul>
+
+          <h3>Next architectural milestone</h3>
+          <p>
+            <strong>Layer 4 — Shared Functionality:</strong>
+            the architecture for the common application engines and
+            services that make IKL's search, navigation, rendering,
+            simulations, assessment and learner-facing features work
+            consistently across the platform.
+          </p>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <footer>
+    <p><strong>Interactive Knowledge Lexicon</strong></p>
+    <p class="tagline">Explore. Understand. Experiment.</p>
+    <p>Created by Amir Khan.</p>
+  </footer>
+
+</body>
+</html>
