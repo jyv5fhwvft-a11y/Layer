@@ -1,0 +1,1035 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>IKL | Layer 5 — Quality, Automation and Publishing</title>
+
+  <style>
+    :root {
+      --navy: #142b4a;
+      --blue: #2563eb;
+      --light-blue: #eaf2ff;
+      --background: #f4f7fb;
+      --white: #ffffff;
+      --text: #26364a;
+      --muted: #617187;
+      --teal: #0f8b83;
+      --amber: #b7791f;
+      --border: #dce5ef;
+      --shadow: 0 5px 18px rgba(20, 43, 74, 0.07);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.7;
+    }
+
+    header {
+      background: linear-gradient(135deg, #142b4a, #2459a6);
+      color: white;
+      padding: 48px 20px;
+      text-align: center;
+    }
+
+    header .eyebrow {
+      font-size: 13px;
+      letter-spacing: 2px;
+      font-weight: bold;
+      opacity: 0.85;
+    }
+
+    header h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      margin: 14px 0;
+    }
+
+    header p {
+      max-width: 720px;
+      margin: auto;
+      color: #e4edff;
+      font-size: 17px;
+    }
+
+    .tagline {
+      margin-top: 22px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .document-meta {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 25px;
+    }
+
+    .document-meta span {
+      background: rgba(255,255,255,0.13);
+      padding: 7px 13px;
+      border-radius: 20px;
+      font-size: 13px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 0 18px;
+    }
+
+    .notice {
+      background: #fff6e5;
+      border-left: 5px solid var(--amber);
+      padding: 18px 20px;
+      border-radius: 8px;
+      margin-bottom: 25px;
+    }
+
+    .notice strong {
+      color: #80520e;
+    }
+
+    .intro-card,
+    .section-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .section-card h2 {
+      color: var(--navy);
+      font-size: 22px;
+      margin-top: 0;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--light-blue);
+    }
+
+    h3 {
+      color: #2459a6;
+      margin-top: 22px;
+    }
+
+    p {
+      margin: 10px 0;
+    }
+
+    ul, ol {
+      padding-left: 25px;
+    }
+
+    li {
+      margin-bottom: 7px;
+    }
+
+    .principle {
+      background: var(--light-blue);
+      border-left: 4px solid var(--blue);
+      border-radius: 7px;
+      padding: 15px 18px;
+      margin: 15px 0;
+    }
+
+    .success {
+      background: #e8f7f3;
+      border-left: 4px solid var(--teal);
+      padding: 15px 18px;
+      border-radius: 7px;
+      margin: 15px 0;
+    }
+
+    .warning {
+      background: #fff6e5;
+      border-left: 4px solid var(--amber);
+      padding: 15px 18px;
+      border-radius: 7px;
+      margin: 15px 0;
+    }
+
+    .stage {
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 17px;
+      margin: 14px 0;
+      background: #fbfdff;
+    }
+
+    .stage-number {
+      color: var(--blue);
+      font-weight: bold;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    .toc a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    .toc a:hover {
+      text-decoration: underline;
+    }
+
+    .toc li {
+      margin-bottom: 9px;
+    }
+
+    .boundary {
+      background: #f0f4f9;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 18px;
+      margin-top: 15px;
+    }
+
+    footer {
+      background: var(--navy);
+      color: white;
+      text-align: center;
+      padding: 27px 15px;
+      margin-top: 45px;
+    }
+
+    footer p {
+      margin: 5px;
+    }
+
+    footer .credit {
+      font-weight: bold;
+      color: #d9e8ff;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 35px 17px;
+      }
+
+      .section-card,
+      .intro-card {
+        padding: 19px;
+      }
+
+      .section-card h2 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="eyebrow">INTERACTIVE KNOWLEDGE LEXICON</div>
+
+  <h1>Layer 5</h1>
+
+  <p>Quality, Automation and Publishing</p>
+
+  <p>
+    The quality and release-control architecture that helps
+    ensure IKL remains accurate, reliable, accessible and maintainable.
+  </p>
+
+  <div class="tagline">Explore. Understand. Experiment.</div>
+
+  <div class="document-meta">
+    <span>Architecture Document</span>
+    <span>Edition 1.0</span>
+    <span>Layer 5 of 5</span>
+  </div>
+</header>
+
+<main class="container">
+
+  <div class="notice">
+    <strong>Architecture boundary:</strong>
+    This document defines the intended quality, automation,
+    publishing and maintenance architecture. It does not
+    authorise implementation, repository restructuring,
+    deployment changes or modification of existing features.
+    Those actions require separate approval.
+  </div>
+
+  <section class="intro-card">
+    <h2>Document Purpose</h2>
+
+    <p>
+      Layer 5 defines how the Interactive Knowledge Lexicon
+      will protect the quality of its educational content,
+      technical functionality, learner experience and published
+      website.
+    </p>
+
+    <p>
+      It establishes a controlled approach to checking,
+      validating, testing, publishing, monitoring and maintaining
+      the platform.
+    </p>
+
+    <div class="principle">
+      <strong>Central principle:</strong>
+      A feature is not complete simply because it has been
+      created. It must also be checked, tested, documented
+      and safely published.
+    </div>
+  </section>
+
+  <section class="section-card toc">
+    <h2>Document Navigation</h2>
+
+    <ol>
+      <li><a href="#s1">Purpose and Objectives</a></li>
+      <li><a href="#s2">Scope of Layer 5</a></li>
+      <li><a href="#s3">Core Quality Principles</a></li>
+      <li><a href="#s4">Educational Content Quality Assurance</a></li>
+      <li><a href="#s5">Technical Quality Assurance</a></li>
+      <li><a href="#s6">Automated Content Validation</a></li>
+      <li><a href="#s7">Automated Functional Testing</a></li>
+      <li><a href="#s8">Regression Testing and Feature Protection</a></li>
+      <li><a href="#s9">Accessibility and Responsive Quality</a></li>
+      <li><a href="#s10">Security and Privacy Quality Assurance</a></li>
+      <li><a href="#s11">Version Control and Change Management</a></li>
+      <li><a href="#s12">Backup and Recovery</a></li>
+      <li><a href="#s13">Controlled Publishing and Deployment</a></li>
+      <li><a href="#s14">Post-Publication Monitoring</a></li>
+      <li><a href="#s15">Error Reporting and Maintenance</a></li>
+      <li><a href="#s16">Documentation and Release Records</a></li>
+      <li><a href="#s17">Automation Roadmap</a></li>
+      <li><a href="#s18">Relationship with the Five IKL Layers</a></li>
+      <li><a href="#s19">Implementation Boundaries and Approval Record</a></li>
+    </ol>
+  </section>
+
+  <section class="section-card" id="s1">
+    <h2>1. Purpose and Objectives</h2>
+
+    <p>
+      The purpose of Layer 5 is to establish a systematic
+      quality-control and publishing framework for IKL.
+    </p>
+
+    <h3>Primary objectives</h3>
+    <ul>
+      <li>Protect educational accuracy and clarity.</li>
+      <li>Identify technical errors before publication.</li>
+      <li>Validate content structure and completeness.</li>
+      <li>Protect existing working features from regression.</li>
+      <li>Support reliable publishing and deployment.</li>
+      <li>Monitor the published website.</li>
+      <li>Make maintenance and improvements controlled and traceable.</li>
+    </ul>
+
+    <div class="principle">
+      Quality must be considered throughout the development
+      lifecycle, not merely at the end.
+    </div>
+  </section>
+
+  <section class="section-card" id="s2">
+    <h2>2. Scope of Layer 5</h2>
+
+    <p>
+      Layer 5 covers the quality and release lifecycle of
+      the complete IKL platform.
+    </p>
+
+    <h3>Included responsibilities</h3>
+    <ul>
+      <li>Educational content review.</li>
+      <li>Technical validation.</li>
+      <li>Automated structural checks.</li>
+      <li>Functional and regression testing.</li>
+      <li>Accessibility and responsive checks.</li>
+      <li>Security and privacy review.</li>
+      <li>Version control and backups.</li>
+      <li>Publishing safeguards.</li>
+      <li>Post-publication monitoring.</li>
+      <li>Maintenance and release documentation.</li>
+    </ul>
+
+    <h3>Outside this layer</h3>
+    <p>
+      Layer 5 does not independently define the educational
+      experience, concept-page template, content data model
+      or shared feature engines. Those responsibilities belong
+      to the other architecture layers.
+    </p>
+  </section>
+
+  <section class="section-card" id="s3">
+    <h2>3. Core Quality Principles</h2>
+
+    <h3>3.1 Accuracy</h3>
+    <p>
+      Educational explanations, examples, diagrams and
+      references should be factually reliable.
+    </p>
+
+    <h3>3.2 Consistency</h3>
+    <p>
+      Concepts should follow the approved teaching structure
+      and consistent presentation rules.
+    </p>
+
+    <h3>3.3 Reliability</h3>
+    <p>
+      Navigation, search, learning tools and other shared
+      functionality should behave predictably.
+    </p>
+
+    <h3>3.4 Accessibility</h3>
+    <p>
+      Learners should be able to use IKL across supported
+      devices and different accessibility needs.
+    </p>
+
+    <h3>3.5 Traceability</h3>
+    <p>
+      Important changes should have a documented reason,
+      review status and identifiable version.
+    </p>
+
+    <h3>3.6 Controlled change</h3>
+    <p>
+      Changes must be reviewed and tested in proportion
+      to their potential impact.
+    </p>
+
+    <div class="success">
+      <strong>Quality rule:</strong>
+      No improvement should silently damage an existing
+      working capability.
+    </div>
+  </section>
+
+  <section class="section-card" id="s4">
+    <h2>4. Educational Content Quality Assurance</h2>
+
+    <p>
+      IKL is an educational platform. Its content must be
+      understandable, accurate and suitable for the intended
+      learning level.
+    </p>
+
+    <h3>Content review dimensions</h3>
+    <ul>
+      <li>Factual correctness.</li>
+      <li>Clear definitions and explanations.</li>
+      <li>Appropriate learning-level progression.</li>
+      <li>Useful analogies and mental models.</li>
+      <li>Consistency with the 15-section teaching structure.</li>
+      <li>Correct and relevant practical examples.</li>
+      <li>Accurate diagrams and interactive explanations.</li>
+      <li>Appropriate references and source attribution.</li>
+      <li>Useful assessment questions and feedback.</li>
+    </ul>
+
+    <h3>Content completeness</h3>
+    <p>
+      Each concept should be checked against the approved
+      teaching structure. Missing or incomplete sections
+      must be identified before the concept is considered
+      ready for publication.
+    </p>
+
+    <h3>Content review outcome</h3>
+    <ul>
+      <li>Needs work.</li>
+      <li>Under review.</li>
+      <li>Approved for publication.</li>
+      <li>Published.</li>
+    </ul>
+  </section>
+
+  <section class="section-card" id="s5">
+    <h2>5. Technical Quality Assurance</h2>
+
+    <p>
+      Technical quality assurance checks whether IKL works
+      correctly and consistently.
+    </p>
+
+    <h3>Technical checks</h3>
+    <ul>
+      <li>HTML structure and document validity.</li>
+      <li>CSS loading and layout consistency.</li>
+      <li>JavaScript execution and error handling.</li>
+      <li>Working internal and external links.</li>
+      <li>Correct navigation between pages.</li>
+      <li>Correct loading of images and resources.</li>
+      <li>Search and discovery behaviour.</li>
+      <li>Interactive controls and simulations.</li>
+      <li>Page performance and loading behaviour.</li>
+    </ul>
+
+    <div class="principle">
+      A page that looks correct must also function correctly.
+    </div>
+  </section>
+
+  <section class="section-card" id="s6">
+    <h2>6. Automated Content Validation</h2>
+
+    <p>
+      Automated validation will help identify structural
+      problems before content reaches publication.
+    </p>
+
+    <h3>Validation responsibilities</h3>
+    <ul>
+      <li>Check whether required concept data exists.</li>
+      <li>Check required metadata fields.</li>
+      <li>Check the approved 15-section structure.</li>
+      <li>Identify missing content files.</li>
+      <li>Identify invalid or incomplete data.</li>
+      <li>Check concept identifiers and slugs.</li>
+      <li>Check relationships between concepts.</li>
+      <li>Check references to shared resources.</li>
+      <li>Check content and schema version information.</li>
+      <li>Check publication-status consistency.</li>
+    </ul>
+
+    <h3>Validation outcomes</h3>
+    <ul>
+      <li>Pass: required checks succeeded.</li>
+      <li>Warning: an issue needs review.</li>
+      <li>Fail: a required condition was not satisfied.</li>
+    </ul>
+
+    <div class="warning">
+      Automated validation can identify structural problems.
+      It cannot independently guarantee that an explanation
+      is educationally excellent or factually correct.
+      Human review remains necessary.
+    </div>
+  </section>
+
+  <section class="section-card" id="s7">
+    <h2>7. Automated Functional Testing</h2>
+
+    <p>
+      Functional testing checks whether important features
+      behave as intended.
+    </p>
+
+    <h3>Areas to test</h3>
+    <ul>
+      <li>Homepage loading.</li>
+      <li>Concept search and discovery.</li>
+      <li>Category navigation.</li>
+      <li>Concept-page navigation.</li>
+      <li>Interactive diagrams and simulations.</li>
+      <li>Quiz questions and feedback.</li>
+      <li>Learning progress functions.</li>
+      <li>Revision and knowledge reinforcement.</li>
+      <li>Glossary and reference links.</li>
+    </ul>
+
+    <h3>Testing approach</h3>
+    <p>
+      Tests should verify both the expected result and
+      important failure conditions. For example, search
+      should return relevant results when a concept exists
+      and provide a useful response when no match is found.
+    </p>
+  </section>
+
+  <section class="section-card" id="s8">
+    <h2>8. Regression Testing and Protection of Existing Features</h2>
+
+    <p>
+      Regression testing checks whether a new change has
+      unintentionally damaged something that previously worked.
+    </p>
+
+    <h3>Protected feature areas</h3>
+    <ul>
+      <li>Homepage and navigation.</li>
+      <li>Search functionality.</li>
+      <li>Existing concept pages.</li>
+      <li>Shared styles and layouts.</li>
+      <li>JavaScript functionality.</li>
+      <li>Responsive behaviour.</li>
+      <li>Existing links and resources.</li>
+    </ul>
+
+    <h3>Regression procedure</h3>
+    <ol>
+      <li>Identify the features affected by a proposed change.</li>
+      <li>Record their existing expected behaviour.</li>
+      <li>Make the authorised change.</li>
+      <li>Retest the changed feature.</li>
+      <li>Retest related existing features.</li>
+      <li>Record the results.</li>
+      <li>Do not publish if a critical regression remains unresolved.</li>
+    </ol>
+
+    <div class="success">
+      Existing working features are protected assets.
+      Their continued operation must be verified after
+      relevant changes.
+    </div>
+  </section>
+
+  <section class="section-card" id="s9">
+    <h2>9. Accessibility and Responsive Quality Assurance</h2>
+
+    <p>
+      IKL should remain usable across different screen sizes,
+      devices and accessibility requirements.
+    </p>
+
+    <h3>Responsive checks</h3>
+    <ul>
+      <li>Mobile phone layout.</li>
+      <li>Tablet layout.</li>
+      <li>Larger-screen layout.</li>
+      <li>Readable text and spacing.</li>
+      <li>Usable navigation and controls.</li>
+      <li>Diagrams that fit the available screen.</li>
+    </ul>
+
+    <h3>Accessibility checks</h3>
+    <ul>
+      <li>Meaningful heading hierarchy.</li>
+      <li>Readable colour contrast.</li>
+      <li>Text alternatives for meaningful images.</li>
+      <li>Keyboard-accessible controls where applicable.</li>
+      <li>Clear labels and instructions.</li>
+      <li>Understandable error messages.</li>
+      <li>Accessible interactive learning components.</li>
+    </ul>
+  </section>
+
+  <section class="section-card" id="s10">
+    <h2>10. Security and Privacy Quality Assurance</h2>
+
+    <p>
+      IKL should protect its users, content and technical
+      resources through responsible security practices.
+    </p>
+
+    <h3>Security considerations</h3>
+    <ul>
+      <li>Review external scripts and dependencies.</li>
+      <li>Avoid exposing secret keys or credentials.</li>
+      <li>Validate untrusted input.</li>
+      <li>Use safe handling of user-generated content.</li>
+      <li>Review third-party integrations.</li>
+      <li>Keep dependencies under review.</li>
+      <li>Address identified vulnerabilities.</li>
+    </ul>
+
+    <h3>Privacy considerations</h3>
+    <ul>
+      <li>Collect only necessary learner information.</li>
+      <li>Explain what information is collected and why.</li>
+      <li>Limit access to personal information.</li>
+      <li>Protect stored learning records.</li>
+      <li>Respect applicable privacy requirements.</li>
+    </ul>
+
+    <div class="warning">
+      Security and privacy requirements must be reviewed
+      before introducing accounts, learner records,
+      external services or other data-collecting features.
+    </div>
+  </section>
+
+  <section class="section-card" id="s11">
+    <h2>11. Version Control and Change Management</h2>
+
+    <p>
+      Changes to IKL should be traceable and reversible
+      wherever practical.
+    </p>
+
+    <h3>Version-control responsibilities</h3>
+    <ul>
+      <li>Maintain a record of important changes.</li>
+      <li>Identify the reason for each significant change.</li>
+      <li>Distinguish content changes from code changes.</li>
+      <li>Track document and architecture editions.</li>
+      <li>Review changes before publication.</li>
+      <li>Preserve the history of the project.</li>
+    </ul>
+
+    <h3>Change-management sequence</h3>
+    <ol>
+      <li>Propose the change.</li>
+      <li>Identify its impact.</li>
+      <li>Obtain required approval.</li>
+      <li>Make the authorised modification.</li>
+      <li>Test the result.</li>
+      <li>Document the change.</li>
+      <li>Publish through the approved process.</li>
+    </ol>
+  </section>
+
+  <section class="section-card" id="s12">
+    <h2>12. Backup and Recovery</h2>
+
+    <p>
+      Backup and recovery arrangements help protect IKL
+      against accidental deletion, corruption or failed changes.
+    </p>
+
+    <h3>Backup principles</h3>
+    <ul>
+      <li>Preserve important source files.</li>
+      <li>Maintain reliable version history.</li>
+      <li>Identify important project documents.</li>
+      <li>Protect essential content and configuration.</li>
+      <li>Document recovery procedures.</li>
+    </ul>
+
+    <h3>Recovery principles</h3>
+    <ul>
+      <li>Identify the affected files or features.</li>
+      <li>Determine the last known good version.</li>
+      <li>Restore or reverse the problematic change.</li>
+      <li>Verify that the restored version works.</li>
+      <li>Document the incident and recovery.</li>
+    </ul>
+
+    <div class="principle">
+      Recovery is not complete until the restored system
+      has been checked.
+    </div>
+  </section>
+
+  <section class="section-card" id="s13">
+    <h2>13. Controlled Publishing and Deployment</h2>
+
+    <p>
+      Publishing makes approved IKL changes available
+      to learners. It must be controlled rather than accidental.
+    </p>
+
+    <h3>Publication requirements</h3>
+    <ul>
+      <li>Required content checks have passed.</li>
+      <li>Relevant technical checks have passed.</li>
+      <li>Important links and resources work.</li>
+      <li>Existing features have been protected.</li>
+      <li>Required approvals have been obtained.</li>
+      <li>Release information has been recorded.</li>
+    </ul>
+
+    <h3>Publishing sequence</h3>
+    <ol>
+      <li>Prepare the authorised change.</li>
+      <li>Complete the required checks.</li>
+      <li>Review the publishing candidate.</li>
+      <li>Publish through the approved deployment method.</li>
+      <li>Confirm that deployment completed.</li>
+      <li>Open and inspect the published result.</li>
+      <li>Record the release.</li>
+    </ol>
+
+    <div class="warning">
+      A successful deployment indicator does not by itself
+      prove that the published page is correct. Post-deployment
+      verification is still required.
+    </div>
+  </section>
+
+  <section class="section-card" id="s14">
+    <h2>14. Post-Publication Monitoring</h2>
+
+    <p>
+      Quality assurance continues after a change has been
+      published.
+    </p>
+
+    <h3>Monitoring responsibilities</h3>
+    <ul>
+      <li>Check important pages for availability.</li>
+      <li>Identify broken navigation and links.</li>
+      <li>Monitor important interactive features.</li>
+      <li>Identify loading and display problems.</li>
+      <li>Review reported learner problems.</li>
+      <li>Check whether recent releases behave correctly.</li>
+    </ul>
+
+    <h3>Monitoring outcomes</h3>
+    <ul>
+      <li>Operating normally.</li>
+      <li>Issue identified.</li>
+      <li>Investigation required.</li>
+      <li>Correction in progress.</li>
+      <li>Resolved and verified.</li>
+    </ul>
+  </section>
+
+  <section class="section-card" id="s15">
+    <h2>15. Error Reporting and Maintenance</h2>
+
+    <p>
+      Issues should be recorded, prioritised, investigated
+      and resolved in a controlled way.
+    </p>
+
+    <h3>Issue record</h3>
+    <ul>
+      <li>Issue description.</li>
+      <li>Affected page or feature.</li>
+      <li>Steps to reproduce the problem.</li>
+      <li>Expected behaviour.</li>
+      <li>Actual behaviour.</li>
+      <li>Severity and priority.</li>
+      <li>Current status.</li>
+      <li>Resolution and verification notes.</li>
+    </ul>
+
+    <h3>Maintenance cycle</h3>
+    <ol>
+      <li>Receive or identify an issue.</li>
+      <li>Record and classify it.</li>
+      <li>Investigate its cause.</li>
+      <li>Plan an authorised correction.</li>
+      <li>Test the correction.</li>
+      <li>Publish if approved.</li>
+      <li>Verify and close the issue.</li>
+    </ol>
+  </section>
+
+  <section class="section-card" id="s16">
+    <h2>16. Documentation and Release Records</h2>
+
+    <p>
+      Documentation provides a reliable history of how
+      IKL changes and evolves.
+    </p>
+
+    <h3>Records to maintain</h3>
+    <ul>
+      <li>Architecture documents and approval records.</li>
+      <li>Content review records.</li>
+      <li>Validation and test results.</li>
+      <li>Change descriptions.</li>
+      <li>Release and deployment records.</li>
+      <li>Known issues and maintenance records.</li>
+      <li>Recovery and incident records.</li>
+    </ul>
+
+    <h3>Release record essentials</h3>
+    <ul>
+      <li>Release identifier or version.</li>
+      <li>Publication date.</li>
+      <li>Summary of changes.</li>
+      <li>Relevant checks completed.</li>
+      <li>Approval status.</li>
+      <li>Known limitations, if any.</li>
+    </ul>
+  </section>
+
+  <section class="section-card" id="s17">
+    <h2>17. Automation Roadmap</h2>
+
+    <p>
+      Automation should be introduced gradually.
+      The objective is to reduce repetitive checking while
+      retaining human oversight for important decisions.
+    </p>
+
+    <div class="stage">
+      <div class="stage-number">STAGE 1</div>
+      <h3>Basic Validation</h3>
+      <ul>
+        <li>Check required files.</li>
+        <li>Check required content fields.</li>
+        <li>Identify incomplete concepts.</li>
+        <li>Validate basic data structure.</li>
+      </ul>
+    </div>
+
+    <div class="stage">
+      <div class="stage-number">STAGE 2</div>
+      <h3>Functional Checks</h3>
+      <ul>
+        <li>Check important links.</li>
+        <li>Test key navigation paths.</li>
+        <li>Check important interactive features.</li>
+        <li>Identify common technical failures.</li>
+      </ul>
+    </div>
+
+    <div class="stage">
+      <div class="stage-number">STAGE 3</div>
+      <h3>Publishing Safeguards</h3>
+      <ul>
+        <li>Require essential checks before release.</li>
+        <li>Record validation outcomes.</li>
+        <li>Protect existing functionality.</li>
+        <li>Support controlled publishing.</li>
+      </ul>
+    </div>
+
+    <div class="stage">
+      <div class="stage-number">STAGE 4</div>
+      <h3>Monitoring and Maintenance</h3>
+      <ul>
+        <li>Monitor important published pages.</li>
+        <li>Track reported issues.</li>
+        <li>Support maintenance workflows.</li>
+        <li>Verify corrections.</li>
+      </ul>
+    </div>
+
+    <div class="stage">
+      <div class="stage-number">STAGE 5</div>
+      <h3>Continuous Improvement</h3>
+      <ul>
+        <li>Review recurring errors.</li>
+        <li>Improve validation coverage.</li>
+        <li>Refine testing procedures.</li>
+        <li>Improve the publishing process.</li>
+      </ul>
+    </div>
+
+    <div class="principle">
+      Automation should develop in response to real project
+      needs. It should not introduce unnecessary complexity
+      before the underlying workflow is understood.
+    </div>
+  </section>
+
+  <section class="section-card" id="s18">
+    <h2>18. Relationship with the Five IKL Layers</h2>
+
+    <p>
+      Layer 5 protects the quality of the complete architecture.
+      It does not replace the responsibilities of the other layers.
+    </p>
+
+    <h3>Layer 1 — Learner Experience</h3>
+    <p>
+      Quality checks help ensure that the learner-facing
+      experience remains understandable, accessible and usable.
+    </p>
+
+    <h3>Layer 2 — Concept Page and Template</h3>
+    <p>
+      Quality checks protect the approved concept-page
+      structure, presentation and reusable template.
+    </p>
+
+    <h3>Layer 3 — Content and Data</h3>
+    <p>
+      Validation checks help ensure that structured content,
+      concept metadata, relationships and versions remain consistent.
+    </p>
+
+    <h3>Layer 4 — Shared Functionality</h3>
+    <p>
+      Functional and regression testing help protect shared
+      services such as search, quizzes, simulations and progress.
+    </p>
+
+    <h3>Layer 5 — Quality, Automation and Publishing</h3>
+    <p>
+      This layer coordinates quality assurance, validation,
+      testing, controlled release, monitoring and maintenance.
+    </p>
+
+    <div class="success">
+      <strong>Architecture outcome:</strong>
+      All five layers work together as one coherent platform,
+      while Layer 5 provides the quality-control framework
+      across them.
+    </div>
+  </section>
+
+  <section class="section-card" id="s19">
+    <h2>19. Implementation Boundaries and Approval Record</h2>
+
+    <h3>19.1 Architecture boundary</h3>
+    <p>
+      This document defines the intended architecture for
+      quality, automation and publishing. It is not an
+      implementation instruction.
+    </p>
+
+    <h3>19.2 Existing repository protection</h3>
+    <ul>
+      <li>No unapproved repository restructuring.</li>
+      <li>No unapproved file renaming or movement.</li>
+      <li>No unapproved changes to existing pages.</li>
+      <li>No unapproved changes to working features.</li>
+      <li>No automatic migration of existing content.</li>
+      <li>No deployment changes without separate approval.</li>
+    </ul>
+
+    <h3>19.3 Separate implementation approval</h3>
+    <p>
+      Any future implementation must be proposed and approved
+      separately. Architecture approval alone does not grant
+      permission to modify the working platform.
+    </p>
+
+    <h3>19.4 Human oversight</h3>
+    <p>
+      Automated checks support human judgement. Important
+      educational, security, privacy and publishing decisions
+      must retain appropriate human review.
+    </p>
+
+    <div class="boundary">
+      <h3>Document approval record</h3>
+      <p><strong>Document:</strong> Layer 5 — Quality, Automation and Publishing</p>
+      <p><strong>Edition:</strong> 1.0</p>
+      <p><strong>Architecture status:</strong> Submitted for review and approval</p>
+      <p><strong>Implementation status:</strong> Not authorised by this document</p>
+      <p><strong>Project:</strong> Interactive Knowledge Lexicon</p>
+    </div>
+  </section>
+
+  <section class="intro-card">
+    <h2>Completion of the Five-Layer Architecture</h2>
+
+    <p>
+      Layer 5 completes the five-layer architecture framework
+      by defining how the platform's educational and technical
+      quality will be protected throughout its lifecycle.
+    </p>
+
+    <p>
+      Together, the five layers describe the learner experience,
+      concept-page architecture, content and data, shared
+      functionality, and quality and publishing controls.
+    </p>
+
+    <div class="principle">
+      The next architectural milestone is the consolidation
+      of the five approved layers into the IKL Master
+      Architecture Bible.
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Interactive Knowledge Lexicon</p>
+  <p>Explore. Understand. Experiment.</p>
+  <p class="credit">Created by Amir Khan.</p>
+</footer>
+
+</body>
+</html>
