@@ -1,0 +1,1069 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interactive Knowledge Lexicon — Layer 1 Learner Experience, Consolidated Edition 2.0">
+  <title>IKL | Layer 1 — Learner Experience</title>
+
+  <style>
+    :root {
+      --navy: #142b4a;
+      --blue: #2463c7;
+      --electric: #2878f0;
+      --teal: #148a78;
+      --amber: #a96513;
+      --ink: #243247;
+      --muted: #607087;
+      --background: #f4f7fb;
+      --white: #ffffff;
+      --border: #dce4ef;
+      --soft-blue: #eaf2ff;
+      --soft-teal: #e8f5f1;
+      --soft-amber: #fff4e5;
+      --shadow: 0 8px 24px rgba(20,43,74,.07);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.7;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #142b4a, #2459a5);
+      color: white;
+      padding: 55px 22px 45px;
+    }
+
+    .hero-inner, .layout {
+      max-width: 1150px;
+      margin: auto;
+    }
+
+    .eyebrow {
+      font-size: .8rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      font-weight: bold;
+      color: #c8dcff;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.15;
+      margin: 12px 0;
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: #e1ebff;
+    }
+
+    .metadata {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .pill {
+      border: 1px solid rgba(255,255,255,.4);
+      border-radius: 30px;
+      padding: 6px 13px;
+      font-size: .83rem;
+    }
+
+    .tagline {
+      margin-top: 20px;
+      color: #d5e5ff;
+      font-weight: bold;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+      gap: 25px;
+      padding: 28px 20px 55px;
+    }
+
+    nav {
+      position: sticky;
+      top: 15px;
+      align-self: start;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 18px;
+      max-height: calc(100vh - 30px);
+      overflow-y: auto;
+      box-shadow: var(--shadow);
+    }
+
+    nav h2 {
+      font-size: 1rem;
+      color: var(--navy);
+    }
+
+    nav a {
+      display: block;
+      padding: 6px 8px;
+      border-radius: 7px;
+      font-size: .88rem;
+      color: #40536d;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      background: var(--soft-blue);
+      color: var(--blue);
+    }
+
+    main { min-width: 0; }
+
+    section, .intro {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 28px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+      scroll-margin-top: 15px;
+    }
+
+    h2 {
+      color: var(--navy);
+      font-size: 1.55rem;
+      line-height: 1.3;
+      margin-top: 0;
+    }
+
+    h3 {
+      color: #244c83;
+      font-size: 1.12rem;
+      margin-top: 24px;
+    }
+
+    .kicker {
+      color: var(--blue);
+      font-size: .75rem;
+      font-weight: bold;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    li { margin: 6px 0; }
+
+    .callout {
+      background: var(--soft-blue);
+      border-left: 4px solid var(--electric);
+      padding: 15px 18px;
+      border-radius: 8px;
+      margin: 18px 0;
+    }
+
+    .callout.teal {
+      background: var(--soft-teal);
+      border-color: var(--teal);
+    }
+
+    .callout.amber {
+      background: var(--soft-amber);
+      border-color: var(--amber);
+    }
+
+    .layers {
+      display: grid;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .layer {
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .layer strong { display: block; color: var(--navy); }
+    .layer small { color: var(--muted); }
+
+    .layer.active {
+      background: var(--soft-blue);
+      border: 2px solid var(--electric);
+    }
+
+    .layer.two { background: #f1f7ff; }
+    .layer.three { background: #edf8f3; }
+    .layer.four { background: #f3efff; }
+    .layer.five { background: #fff5e9; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+    }
+
+    th, td {
+      text-align: left;
+      vertical-align: top;
+      padding: 11px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: #f0f4fa;
+      color: var(--navy);
+    }
+
+    footer {
+      background: var(--navy);
+      color: #e6efff;
+      text-align: center;
+      padding: 28px 18px;
+    }
+
+    footer strong {
+      display: block;
+      color: white;
+      margin-bottom: 5px;
+    }
+
+    @media (max-width: 820px) {
+      .layout { grid-template-columns: 1fr; }
+      nav { position: static; max-height: none; }
+      nav .links {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .layout { padding: 18px 12px 40px; }
+      section, .intro { padding: 20px; }
+      nav .links { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      body { background: white; }
+      nav { display: none; }
+      .layout { display: block; }
+      section, .intro { box-shadow: none; break-inside: avoid; }
+      footer { background: white; color: var(--navy); }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Interactive Knowledge Lexicon</div>
+    <h1>Layer 1 — Learner Experience</h1>
+    <p class="subtitle">
+      Consolidated Architecture and Requirements Document
+    </p>
+
+    <div class="metadata">
+      <span class="pill">Consolidated Edition 2.0</span>
+      <span class="pill">Official Reference</span>
+      <span class="pill">126 Original Decisions</span>
+      <span class="pill">5 November 2026</span>
+    </div>
+
+    <p class="tagline">Explore. Understand. Experiment.</p>
+  </div>
+</header>
+
+<div class="layout">
+
+<nav aria-label="Document navigation">
+  <h2>Document Contents</h2>
+  <div class="links">
+    <a href="#purpose">Purpose</a>
+    <a href="#journeys">Two Learning Journeys</a>
+    <a href="#architecture">Five Layers</a>
+    <a href="#part1">Decisions 1–24</a>
+    <a href="#part2">Decisions 25–49</a>
+    <a href="#part3">Decisions 50–58</a>
+    <a href="#part4">Decisions 59–79</a>
+    <a href="#part5">Decisions 80–91</a>
+    <a href="#part6">Decisions 92–103</a>
+    <a href="#part7">Decisions 104–109</a>
+    <a href="#part8">Decisions 110–119</a>
+    <a href="#part9">Decisions 120–126</a>
+    <a href="#principles">Shared Principles</a>
+    <a href="#identity">Visual Identity</a>
+    <a href="#privacy">Privacy and Access</a>
+    <a href="#boundaries">Layer Boundaries</a>
+    <a href="#audit">Audit Record</a>
+    <a href="#approval">Approval Record</a>
+  </div>
+</nav>
+
+<main>
+
+<div class="intro" id="purpose">
+  <div class="kicker">Document Purpose</div>
+  <h2>What This Document Establishes</h2>
+  <p>
+    This document establishes the complete learner-facing experience
+    of the Interactive Knowledge Lexicon (IKL).
+    It defines what learners should be able to discover, understand,
+    practise, achieve and experience while using the Lexicon.
+  </p>
+  <p>
+    It consolidates the original 126 approved Layer 1 decisions
+    and the clarifications reviewed during consolidation.
+  </p>
+  <div class="callout teal">
+    <strong>Core distinction:</strong>
+    Layer 1 defines what the learner should experience.
+    The creator's technical learning explains how we design,
+    build, test, maintain and teach the system that makes
+    that experience possible.
+  </div>
+</div>
+
+<section id="journeys">
+  <div class="kicker">Two Connected Learning Journeys</div>
+  <h2>1. The Learner and the Creator</h2>
+
+  <h3>Journey A — The IKL Learner</h3>
+  <p>
+    Students use the Lexicon to discover technical concepts,
+    learn at an appropriate level, explore explanations and examples,
+    interact with diagrams and simulations, assess understanding,
+    track learning, develop skills, prepare for careers and complete
+    practical projects.
+  </p>
+
+  <h3>Journey B — Learn as You Create / Learn as You Build</h3>
+  <p>
+    The creator learns how to design, develop, maintain and teach
+    the technology behind the Lexicon.
+  </p>
+  <ul>
+    <li>HTML — page structure.</li>
+    <li>CSS — visual presentation.</li>
+    <li>JavaScript — rendering, interactions and functionality.</li>
+    <li>JSON — structured educational content and concept data.</li>
+    <li>Reusable templates and components.</li>
+    <li>Simulations, diagrams and assessment engines.</li>
+    <li>GitHub, version control and publishing.</li>
+    <li>Automation, testing and software architecture.</li>
+  </ul>
+  <p>
+    The creator's learning is part of the wider project.
+    It is not excluded simply because Layer 1 concentrates
+    on the student's experience.
+  </p>
+</section>
+
+<section id="architecture">
+  <div class="kicker">Project Architecture</div>
+  <h2>2. The Five Layers</h2>
+  <p>
+    The layers work together. A learner may experience all five
+    simultaneously, although each has a different development
+    responsibility.
+  </p>
+
+  <div class="layers">
+    <div class="layer active">
+      <strong>Layer 1 — Learner Experience</strong>
+      <small>What learners see, access, do and experience.</small>
+    </div>
+    <div class="layer two">
+      <strong>Layer 2 — Concept Page and Template</strong>
+      <small>The reusable structure and presentation of concept pages.</small>
+    </div>
+    <div class="layer three">
+      <strong>Layer 3 — Content and Data</strong>
+      <small>Educational material and structured concept information.</small>
+    </div>
+    <div class="layer four">
+      <strong>Layer 4 — Shared Functionality</strong>
+      <small>Reusable tools and engines for quizzes, simulations, diagrams and interactions.</small>
+    </div>
+    <div class="layer five">
+      <strong>Layer 5 — Quality, Automation and Publishing</strong>
+      <small>Validation, review, approval, deployment, monitoring and backups.</small>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Approved hybrid direction:</strong>
+    HTML provides page structure, CSS provides visual design,
+    JavaScript provides rendering and functionality, and JSON
+    provides structured educational content and concept data.
+    Detailed implementation belongs in the appropriate technical
+    architecture and creator-learning documents.
+  </div>
+</section>
+
+<section id="part1">
+  <div class="kicker">Part I · Original Decisions 1–24</div>
+  <h2>3. Homepage, Discovery and Navigation</h2>
+  <p>
+    The homepage must provide an accessible starting point from
+    which learners can discover concepts, explore categories
+    and navigate the Lexicon.
+  </p>
+
+  <h3>Ten Homepage Areas</h3>
+  <ol>
+    <li>Welcome section.</li>
+    <li>Search section.</li>
+    <li>Category discovery.</li>
+    <li>Featured concepts.</li>
+    <li>Guided learning pathways.</li>
+    <li>Recently visited concepts.</li>
+    <li>Recommended concepts.</li>
+    <li>Knowledge Map introduction.</li>
+    <li>About the Lexicon.</li>
+    <li>Footer.</li>
+  </ol>
+
+  <h3>Discovery and Navigation Requirements</h3>
+  <ul>
+    <li>Search by concept names, technical terms, keywords, aliases and abbreviations.</li>
+    <li>Support natural-language descriptions, suggestions and helpful search results.</li>
+    <li>Provide clear handling of unsuccessful searches.</li>
+    <li>Support category discovery, initially including Computer Networking, Operating Systems, Programming, Software Development, Cybersecurity, Databases and Computer Architecture.</li>
+    <li>Show featured concepts, guided pathways, recently visited concepts and related recommendations.</li>
+    <li>Support independent exploration without forcing a fixed learning sequence.</li>
+    <li>Provide a Knowledge Map discovery experience.</li>
+    <li>Keep navigation, terminology and presentation consistent.</li>
+    <li>Support responsive devices, accessibility and privacy-conscious local search history.</li>
+  </ul>
+
+  <p><strong>Discovery principle:</strong>
+    Learners should find what they need without having to
+    understand the internal organisation of the website.
+  </p>
+</section>
+
+<section id="part2">
+  <div class="kicker">Part II · Original Decisions 25–49</div>
+  <h2>4. Reading, Understanding and Accessing Concepts</h2>
+  <ul>
+    <li>Explore concepts using categories and combined filters.</li>
+    <li>Receive relevant search suggestions with category information.</li>
+    <li>Navigate through the complete concept lesson using a table of contents covering all 15 official sections.</li>
+    <li>See the current section, visited sections and resume reading position.</li>
+    <li>Understand estimated reading time.</li>
+    <li>Adjust text size, line spacing and visual theme without losing educational content.</li>
+    <li>Use optional text-to-speech and speech highlighting.</li>
+    <li>Access downloadable or printable educational material and complete lesson PDFs where appropriate.</li>
+    <li>Understand that website-based simulations and interactive features may not be reproducible as static PDF content.</li>
+    <li>Access concepts through dedicated, shareable URLs.</li>
+    <li>See concept identity, category, title, subtitle and learning information.</li>
+    <li>Understand learning objectives and expected outcomes as separate items.</li>
+    <li>Identify essential and recommended prerequisites.</li>
+    <li>Understand lesson difficulty separately from explanation level.</li>
+    <li>Use optional knowledge checks and assessments.</li>
+    <li>Access consistent terminology and explanations across supported languages.</li>
+  </ul>
+
+  <div class="callout amber">
+    <strong>Important:</strong>
+    Opening or visiting a section does not automatically mean
+    that the learner has mastered it. The system distinguishes
+    opening, visiting, completing an activity and demonstrating
+    knowledge.
+  </div>
+</section>
+
+<section id="part3">
+  <div class="kicker">Part III · Original Decisions 50–58</div>
+  <h2>5. Progressive and Personalised Learning</h2>
+
+  <p>Four explanation levels are established:</p>
+  <ol>
+    <li>Very simple / first-grader level.</li>
+    <li>Beginner level.</li>
+    <li>Undergraduate level.</li>
+    <li>Technical / advanced level.</li>
+  </ol>
+
+  <p>
+    Learners should be able to move between levels and revisit
+    explanations. Learning resources may include simple explanations,
+    analogies, mental models, technical explanations, practical
+    examples, diagrams, interactive simulations, knowledge checks,
+    assessments and explanations of mistakes or misconceptions.
+  </p>
+
+  <p>
+    Recommendations may reflect learning activity and stated
+    preferences. Optional confidence ratings must not be treated
+    as objective proof of competence. Self-assessment must remain
+    distinguishable from observed activity and demonstrated
+    performance.
+  </p>
+
+  <p><strong>Principle:</strong>
+    Personalisation should be understandable, optional and
+    learner-controlled.
+  </p>
+</section>
+
+<section id="part4">
+  <div class="kicker">Part IV · Original Decisions 59–79</div>
+  <h2>6. Goals, Learning Records, Portfolios and Skills</h2>
+
+  <ul>
+    <li>Personal learning goals, examples, calendar and milestones.</li>
+    <li>Optional learning streaks and achievement badges.</li>
+    <li>Personal learning records and progress indicators.</li>
+    <li>A private Learning Portfolio containing concepts, activities, assessments, projects and evidence.</li>
+    <li>Screenshots, demonstrations, external project links and PDF export where appropriate.</li>
+    <li>Optional sharing with learner-controlled privacy and visibility settings.</li>
+    <li>Skills summaries and evidence-linked skill categories.</li>
+  </ul>
+
+  <h3>Skill Development Stages</h3>
+  <ol>
+    <li>Introduced.</li>
+    <li>Developing.</li>
+    <li>Practised.</li>
+    <li>Demonstrated.</li>
+  </ol>
+
+  <p>
+    The system should explain why a skill has been assigned
+    a particular stage and recommend further development.
+    It must distinguish studying a subject, practising a skill
+    and demonstrating a skill.
+  </p>
+
+  <p>
+    Streaks must not erase achievements or punish learners for
+    taking a break. Certificates are non-accredited completion
+    records unless a separate recognised accreditation arrangement
+    exists. Private portfolio information remains private unless
+    the learner chooses to share it.
+  </p>
+</section>
+
+<section id="part5">
+  <div class="kicker">Part V · Original Decisions 80–91</div>
+  <h2>7. Career Development and Employment Readiness</h2>
+
+  <p>The initial approved career catalogue contains 18 distinct pathways:</p>
+  <ol>
+    <li>Software Developer</li>
+    <li>Network Engineer</li>
+    <li>Cybersecurity Analyst</li>
+    <li>Systems Administrator</li>
+    <li>Database Administrator</li>
+    <li>Cloud Engineer</li>
+    <li>Prompt Engineer</li>
+    <li>UI/UX Designer</li>
+    <li>Ethical Hacker</li>
+    <li>Cyber Forensics Expert</li>
+    <li>Cyber Crime Digital Expert</li>
+    <li>Kali Linux Instructor</li>
+    <li>Ethical Hacking Expert</li>
+    <li>Geopolitics Expert / Geopolitical Analyst</li>
+    <li>Victim Profiler</li>
+    <li>Suspect Profiler</li>
+    <li>Deepfake Expert</li>
+    <li>Deepfake Application Designer</li>
+  </ol>
+
+  <p>
+    Distinct approved career titles must remain distinct.
+    Ethical Hacker and Ethical Hacking Expert; Cyber Forensics
+    Expert and Cyber Crime Digital Expert; Deepfake Expert and
+    Deepfake Application Designer; Victim Profiler and Suspect
+    Profiler are separate entries.
+  </p>
+
+  <h3>Responsible Professional Practice</h3>
+  <ul>
+    <li>Profiling content must be evidence-based, acknowledge uncertainty and avoid unsupported behavioural assumptions.</li>
+    <li>Cybersecurity learning must emphasise lawful, authorised and ethical practice.</li>
+    <li>Deepfake analysis must address synthetic-media detection, authenticity assessment and digital forensics.</li>
+    <li>Deepfake application design must address responsible creation, detection, verification and management.</li>
+  </ul>
+
+  <h3>Career Development Experience</h3>
+  <ul>
+    <li>Foundation, Intermediate and Advanced stages.</li>
+    <li>Career-specific skills and learning requirements.</li>
+    <li>Essential and recommended prerequisites.</li>
+    <li>Specialist branches and career comparisons.</li>
+    <li>Optional career exploration without forced recommendations.</li>
+    <li>Optional readiness assessments that never prevent beginners from starting at Foundation.</li>
+    <li>Readiness reports covering strengths, gaps, starting level, prerequisites, learning sequence, projects and milestones.</li>
+    <li>Online reports, PDF export and optional private Learning Portfolio storage.</li>
+    <li>Dated, sourced and periodically reviewed employment-market information.</li>
+    <li>Current job listings with source, posting information and application links when available.</li>
+    <li>Transparent job-readiness gap analysis.</li>
+  </ul>
+
+  <div class="callout amber">
+    Market trends, salary information and job listings are not
+    guaranteed outcomes. Completing IKL content must not be
+    presented as a guarantee of employment.
+  </div>
+</section>
+
+<section id="part6">
+  <div class="kicker">Part VI · Original Decisions 92–103</div>
+  <h2>8. Interview Preparation and Technical Challenges</h2>
+
+  <h3>Interview Modes</h3>
+  <ol>
+    <li>Guided Practice.</li>
+    <li>Mock Interview.</li>
+    <li>Timed Interview.</li>
+  </ol>
+
+  <p>
+    Interview preparation includes reusable career- and subject-based
+    question banks, model answers, evaluation criteria, explanations,
+    practice history, previous answers, feedback and progress
+    comparisons.
+  </p>
+
+  <p>
+    Optional spoken-answer recording and transcription require
+    microphone permission. Learners control recording retention
+    and deletion. Communication coaching must distinguish
+    measurable speech patterns from subjective impressions.
+  </p>
+
+  <h3>Six Individually Visible Evaluation Dimensions</h3>
+  <ol>
+    <li>Technical accuracy.</li>
+    <li>Completeness.</li>
+    <li>Clarity and communication.</li>
+    <li>Problem-solving approach.</li>
+    <li>Practical reasoning.</li>
+    <li>Professional presentation.</li>
+  </ol>
+
+  <p>
+    Scores must include understandable explanations and transparent
+    criteria. Interview preparation includes the STAR method:
+    Situation, Task, Action and Result.
+  </p>
+
+  <h3>Technical Challenges</h3>
+  <p>
+    Challenges should be available across relevant career pathways
+    and include Guided, Simulation-based and Independent modes,
+    with hints, solutions, explanations, feedback, scoring,
+    attempt history and repeat attempts.
+  </p>
+  <p>
+    Security-related exercises must use authorised, controlled
+    environments and promote lawful professional practice.
+  </p>
+</section>
+
+<section id="part7">
+  <div class="kicker">Part VII · Original Decisions 104–109</div>
+  <h2>9. Technical Projects and Practical Experience</h2>
+
+  <ul>
+    <li>Create and manage projects with descriptions and objectives.</li>
+    <li>Record progress, development stages and evidence.</li>
+    <li>Connect projects to career pathways and skills.</li>
+    <li>Maintain a development history.</li>
+    <li>Use career-specific templates, including software development, networking, cybersecurity, databases, cloud and UI/UX.</li>
+    <li>Work through Beginner, Intermediate and Advanced project levels.</li>
+    <li>Receive evaluation and useful feedback.</li>
+    <li>Showcase selected work with screenshots, demonstrations, technologies, skills and external links.</li>
+    <li>Export appropriate project information.</li>
+    <li>Choose whether projects remain private or are shared.</li>
+    <li>Collaborate where supported, with participation and contribution controls.</li>
+  </ul>
+
+  <p>
+    Project evaluation should consider knowledge, implementation,
+    problem-solving, completeness and quality. Feedback must explain
+    how learners can improve, not merely provide a score.
+  </p>
+  <p>
+    Project evidence may contribute to skills records and portfolios.
+    Private project storage must remain distinct from optional
+    public showcasing.
+  </p>
+</section>
+
+<section id="part8">
+  <div class="kicker">Part VIII · Original Decisions 110–119</div>
+  <h2>10. Mentoring</h2>
+
+  <ul>
+    <li>Mentor profiles and verification of credentials and experience.</li>
+    <li>Clear distinction between verified information and unverified claims.</li>
+    <li>Mentor discovery, matching, invitations and acceptance.</li>
+    <li>Scheduling and private messaging.</li>
+    <li>Project annotations and feedback.</li>
+    <li>Mentor dashboards, learning goals and action plans.</li>
+    <li>Progress reviews and feedback on learner development.</li>
+  </ul>
+
+  <p>
+    Mentoring communication and private information must be protected.
+    Learners should be able to understand a mentor's relevant
+    experience and expertise before deciding whether to engage.
+  </p>
+</section>
+
+<section id="part9">
+  <div class="kicker">Part IX · Original Decisions 120–126</div>
+  <h2>11. Learner Support, Help and Community</h2>
+
+  <ul>
+    <li>Searchable Help Centre and Frequently Asked Questions.</li>
+    <li>Beginner-friendly onboarding, navigation guidance and feature explanations.</li>
+    <li>Problem reporting.</li>
+    <li>Personalised dashboard showing current activities, goals, progress, recent projects, assessments, career development, recommendations and notifications.</li>
+    <li>Unified notifications for reminders, goals, milestones, mentor invitations and messages, collaboration updates, assessment feedback and announcements.</li>
+    <li>Learner-controlled notification preferences; notifications should be useful and non-intrusive.</li>
+    <li>Data export and deletion controls, privacy settings, portfolio visibility, data-retention information and recording controls.</li>
+    <li>Optional moderated learning community.</li>
+  </ul>
+
+  <p>
+    The community must have appropriate moderation, reporting,
+    privacy protections and clear standards against harassment
+    and abuse. Community contributions must not automatically
+    become approved educational content.
+  </p>
+  <p>
+    Learners retain meaningful control over personal information,
+    sharing and participation.
+  </p>
+</section>
+
+<section id="principles">
+  <div class="kicker">Cross-feature Requirements</div>
+  <h2>12. Shared Learner Experience Principles</h2>
+
+  <h3>Learner Control</h3>
+  <p>
+    Learners should understand and control optional features,
+    personalisation, sharing, notifications and privacy settings.
+  </p>
+
+  <h3>Private by Default</h3>
+  <p>
+    Personal learning records, portfolios, project information
+    and mentoring communications should be private unless
+    the learner chooses otherwise.
+  </p>
+
+  <h3>Explainable Progress</h3>
+  <p>
+    The Lexicon must distinguish visits, study, practice,
+    assessment and demonstrated ability.
+  </p>
+
+  <h3>Evidence-Based Skills</h3>
+  <p>
+    Skill descriptions and proficiency stages should connect
+    to appropriate evidence. Self-reports, automated evaluations
+    and human feedback must remain distinguishable.
+  </p>
+
+  <h3>Accessible Learning</h3>
+  <p>
+    The experience should support different devices, learning
+    needs and levels of technical understanding.
+  </p>
+
+  <h3>Responsible Educational Practice</h3>
+  <p>
+    Career, cybersecurity, profiling and synthetic-media content
+    must be handled responsibly and with appropriate professional
+    safeguards.
+  </p>
+
+  <h3>Human Review</h3>
+  <p>
+    Learner reports and feedback must be reviewed appropriately.
+    User submissions must not directly change published
+    educational content.
+  </p>
+
+  <h3>Consistency</h3>
+  <p>
+    Navigation, terminology, feedback, visual language and learner
+    controls should be consistent throughout the Lexicon.
+  </p>
+</section>
+
+<section id="identity">
+  <div class="kicker">Brand and Presentation</div>
+  <h2>13. Visual Identity and Presentation</h2>
+
+  <ul>
+    <li>Deep navy and blue as the principal identity.</li>
+    <li>White and soft-light reading backgrounds.</li>
+    <li>Electric blue for actions and interactive controls.</li>
+    <li>Teal for progress and success.</li>
+    <li>Amber for notes and warnings.</li>
+    <li>Rounded cards and subtle shadows.</li>
+    <li>Clear, readable typography and consistent spacing.</li>
+  </ul>
+
+  <p>
+    The Lexicon should retain a recognisable identity across
+    its homepage, concept pages, learning tools and supporting areas.
+  </p>
+
+  <div class="callout teal">
+    <strong>Exact footer credit on every page:</strong>
+    Created by Amir Khan.
+  </div>
+
+  <p><strong>Approved tagline:</strong>
+    Explore. Understand. Experiment.
+  </p>
+
+  <p>
+    The original custom logo remains part of the Lexicon's
+    visual identity work.
+  </p>
+</section>
+
+<section id="privacy">
+  <div class="kicker">Protection and Access</div>
+  <h2>14. Privacy, Security and Learner Protection</h2>
+
+  <p>
+    Privacy and learner control are foundational requirements,
+    not optional decorative features.
+  </p>
+
+  <ul>
+    <li>Private-by-default personal learning information.</li>
+    <li>Appropriate protection of accounts and personal information where accounts are introduced.</li>
+    <li>Learner-controlled sharing.</li>
+    <li>Clear data export and deletion options.</li>
+    <li>Appropriate handling of recordings and microphone permissions.</li>
+    <li>Protected mentoring communications.</li>
+    <li>Moderated community participation.</li>
+    <li>Transparent recommendations and progress information.</li>
+    <li>Clear distinctions between observed activity, self-reported information, automated evaluation and human feedback.</li>
+  </ul>
+
+  <p>
+    Features should collect and retain only information necessary
+    for their intended purpose.
+  </p>
+
+  <h3>Accessibility and Device Support</h3>
+  <p>
+    The Lexicon must be designed for responsive use across mobile
+    phones, tablets including iPad, laptops and desktop computers.
+    The experience should support readable text, suitable contrast,
+    accessible controls, clear labels, text alternatives, keyboard
+    access and screen-reader compatibility.
+  </p>
+
+  <p>
+    Educational content should remain understandable when a learner
+    cannot use a particular visual or interactive feature.
+  </p>
+</section>
+
+<section id="boundaries">
+  <div class="kicker">Scope and Authority</div>
+  <h2>15. Layer Boundaries and Implementation Authority</h2>
+
+  <p>
+    Approval of this document establishes the learner-facing
+    requirements for Layer 1.
+  </p>
+
+  <p>It does not, by itself:</p>
+  <ul>
+    <li>Authorise changes to GitHub.</li>
+    <li>Authorise a website migration.</li>
+    <li>Approve every technical architecture proposal.</li>
+    <li>Approve implementation of every feature.</li>
+    <li>Declare that all proposed features have already been built.</li>
+    <li>Remove the need for testing and quality review.</li>
+  </ul>
+
+  <p>
+    Layers 2–5 retain their respective responsibilities.
+    Technical decisions must be documented in the appropriate
+    architecture and technical reference materials.
+    Implementation must follow the project's approval
+    and publishing process.
+  </p>
+</section>
+
+<section id="audit">
+  <div class="kicker">Traceability</div>
+  <h2>16. Consolidation and Audit Record</h2>
+
+  <p>
+    The consolidated document covers all 126 original decisions
+    in their original nine groupings.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Audit</th>
+        <th>Original Decisions</th>
+        <th>Coverage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Audit 1</td>
+        <td>1–24</td>
+        <td>Homepage, discovery and navigation</td>
+      </tr>
+      <tr>
+        <td>Audit 2</td>
+        <td>25–49</td>
+        <td>Reading, understanding and access</td>
+      </tr>
+      <tr>
+        <td>Audit 3</td>
+        <td>50–79</td>
+        <td>Progressive learning, goals, records and skills</td>
+      </tr>
+      <tr>
+        <td>Audit 4</td>
+        <td>80–103</td>
+        <td>Career development, interviews and challenges</td>
+      </tr>
+      <tr>
+        <td>Audit 5</td>
+        <td>104–126</td>
+        <td>Projects, mentoring, support and community</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Coverage: 126 of 126 original decisions.</strong></p>
+
+  <p>
+    Approved clarifications are incorporated into the relevant
+    sections without creating a new independent set of original
+    decision numbers.
+  </p>
+
+  <p>
+    Future project records must distinguish original user-approved
+    requirements, approved clarifications, assistant recommendations,
+    new proposals awaiting approval, implemented features,
+    tested and verified features, and published features.
+  </p>
+
+  <p>
+    Any future change to Layer 1 must be traceable to the affected
+    original decision number or clearly identified as a new proposal.
+  </p>
+</section>
+
+<section id="approval">
+  <div class="kicker">Document Control</div>
+  <h2>17. Official Approval Record</h2>
+
+  <table>
+    <tbody>
+      <tr>
+        <th>Document</th>
+        <td>IKL — Layer 1: Learner Experience</td>
+      </tr>
+      <tr>
+        <th>Edition</th>
+        <td>Consolidated Edition 2.0</td>
+      </tr>
+      <tr>
+        <th>Status</th>
+        <td>Official</td>
+      </tr>
+      <tr>
+        <th>Original decisions covered</th>
+        <td>1–126</td>
+      </tr>
+      <tr>
+        <th>Scope</th>
+        <td>Learner-facing experience and requirements</td>
+      </tr>
+      <tr>
+        <th>Creator</th>
+        <td>Amir Khan</td>
+      </tr>
+      <tr>
+        <th>Approval</th>
+        <td>User-authorised finalisation on 5 November 2026</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    This document is the official Layer 1 reference for the
+    Interactive Knowledge Lexicon. It establishes the intended
+    learner experience and provides the requirements baseline
+    against which subsequent design, architecture, implementation
+    and quality reviews should be evaluated.
+  </p>
+
+  <div class="callout amber">
+    <strong>Approval boundary:</strong>
+    Approval of Layer 1 does not constitute approval of
+    implementation or of the remaining technical layers.
+  </div>
+</section>
+
+<section>
+  <div class="kicker">Project Direction</div>
+  <h2>18. What Comes Next</h2>
+
+  <p>
+    Ping is the first fully operational demonstration of the
+    15-section educational format. Process is the next concept
+    and will help validate the reusable concept-production approach.
+  </p>
+
+  <p>
+    The objective is to make each new concept progressively
+    more efficient to create while maintaining educational
+    quality and consistency.
+  </p>
+
+  <p>
+    We will document all five layers before moving into
+    the next concept-production phase.
+  </p>
+
+  <div class="callout teal">
+    <strong>Guiding Cycle:</strong><br>
+    Learn → Build → Understand → Document → Showcase → Monetise → Teach
+  </div>
+</section>
+
+</main>
+</div>
+
+<footer>
+  <strong>Created by Amir Khan.</strong>
+  Interactive Knowledge Lexicon<br>
+  Explore. Understand. Experiment.
+</footer>
+
+</body>
+</html>
