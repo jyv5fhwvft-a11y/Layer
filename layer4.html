@@ -1,0 +1,986 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="IKL Layer 4 - Shared Functionality Architecture">
+<title>IKL Layer 4 — Shared Functionality</title>
+
+<style>
+:root {
+  --navy: #142b4a;
+  --blue: #2463eb;
+  --blue-soft: #eaf1ff;
+  --teal: #087f75;
+  --amber: #9a5b08;
+  --amber-soft: #fff5df;
+  --ink: #263449;
+  --muted: #617087;
+  --paper: #ffffff;
+  --page: #f2f5fa;
+  --line: #dce4ef;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.7;
+}
+
+a { color: var(--blue); }
+
+.page {
+  width: min(100% - 28px, 1050px);
+  margin: 28px auto 48px;
+}
+
+.hero {
+  padding: 45px;
+  border-radius: 22px;
+  color: white;
+  background: linear-gradient(135deg, #142b4a, #2056a8);
+}
+
+.eyebrow {
+  color: #c8dcff;
+  font-size: .8rem;
+  font-weight: bold;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 10px 0;
+  font-size: clamp(2.2rem, 7vw, 4rem);
+  line-height: 1.1;
+}
+
+.subtitle {
+  color: #e2ecff;
+  font-size: 1.2rem;
+}
+
+.chip {
+  display: inline-block;
+  padding: 6px 12px;
+  margin: 5px 4px 0 0;
+  border: 1px solid #ffffff66;
+  border-radius: 30px;
+  font-size: .85rem;
+}
+
+.status {
+  margin-top: 20px;
+  padding: 12px;
+  background: #ffffff20;
+  border-radius: 10px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: 22px;
+  margin-top: 22px;
+  align-items: start;
+}
+
+nav, main, footer {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+nav {
+  position: sticky;
+  top: 15px;
+  padding: 20px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+nav h2 { color: var(--navy); }
+
+nav ol { padding-left: 20px; }
+
+nav li {
+  margin: 8px 0;
+  font-size: .88rem;
+}
+
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: var(--blue);
+  text-decoration: underline;
+}
+
+main {
+  padding: clamp(20px, 4vw, 38px);
+  min-width: 0;
+}
+
+.intro {
+  color: var(--muted);
+  font-size: 1.08rem;
+}
+
+section {
+  padding: 25px 0;
+  border-top: 1px solid var(--line);
+  scroll-margin-top: 20px;
+}
+
+h2 {
+  color: var(--navy);
+  font-size: 1.5rem;
+  line-height: 1.3;
+}
+
+h3 {
+  color: #23466f;
+  margin-top: 20px;
+}
+
+li { margin: 6px 0; }
+
+.principle {
+  margin: 20px 0;
+  padding: 18px;
+  border-left: 4px solid var(--blue);
+  border-radius: 10px;
+  background: var(--blue-soft);
+  color: var(--navy);
+}
+
+.warning {
+  margin: 20px 0;
+  padding: 18px;
+  border-left: 4px solid #d18a19;
+  border-radius: 10px;
+  background: var(--amber-soft);
+  color: #68420b;
+}
+
+.table-wrap { overflow-x: auto; }
+
+table {
+  width: 100%;
+  min-width: 500px;
+  border-collapse: collapse;
+  margin: 15px 0;
+}
+
+th, td {
+  padding: 11px;
+  border: 1px solid var(--line);
+  text-align: left;
+}
+
+th {
+  background: #edf3fb;
+  color: var(--navy);
+}
+
+.layer-item {
+  margin: 10px 0;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fbfcff;
+}
+
+.layer-item strong { color: var(--navy); }
+
+footer {
+  margin-top: 22px;
+  padding: 25px;
+  text-align: center;
+  color: var(--muted);
+}
+
+footer strong {
+  display: block;
+  color: var(--navy);
+  margin-top: 8px;
+}
+
+@media (max-width: 780px) {
+  .layout { grid-template-columns: 1fr; }
+  nav { position: static; max-height: none; }
+  nav ol { columns: 2; }
+}
+
+@media (max-width: 480px) {
+  .page {
+    width: calc(100% - 18px);
+    margin-top: 9px;
+  }
+  .hero { padding: 25px; }
+  nav ol { columns: 1; }
+  main { padding: 18px; }
+}
+
+@media print {
+  body { background: white; }
+  .layout { display: block; }
+  nav { position: static; max-height: none; }
+  section { break-inside: avoid; }
+}
+</style>
+</head>
+
+<body>
+<div class="page" id="top">
+
+<header class="hero">
+  <p class="eyebrow">
+    Interactive Knowledge Lexicon · Architecture · Layer 4 of 5
+  </p>
+
+  <h1>Shared Functionality</h1>
+
+  <p class="subtitle">
+    One shared learning system. Many independent concepts.
+  </p>
+
+  <span class="chip">Edition 1.0</span>
+  <span class="chip">Architecture Document</span>
+  <span class="chip">Creator: Amir Khan</span>
+
+  <div class="status">
+    Architecture document — HTML edition
+  </div>
+</header>
+
+<div class="layout">
+
+<nav aria-label="Document contents">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#s1">Purpose and Objectives</a></li>
+    <li><a href="#s2">Scope of Layer 4</a></li>
+    <li><a href="#s3">Core Architectural Principle</a></li>
+    <li><a href="#s4">Navigation and Page Services</a></li>
+    <li><a href="#s5">Search and Discovery</a></li>
+    <li><a href="#s6">Quiz and Assessment Engine</a></li>
+    <li><a href="#s7">Interactive Simulation Engine</a></li>
+    <li><a href="#s8">Diagram and Visual Learning</a></li>
+    <li><a href="#s9">Calculation Mechanisms</a></li>
+    <li><a href="#s10">Learning Progress</a></li>
+    <li><a href="#s11">Revision and Reinforcement</a></li>
+    <li><a href="#s12">Glossary and References</a></li>
+    <li><a href="#s13">Accessibility</a></li>
+    <li><a href="#s14">Cross-Feature Communication</a></li>
+    <li><a href="#s15">Independent Components</a></li>
+    <li><a href="#s16">Technical Architecture</a></li>
+    <li><a href="#s17">Quality Assurance</a></li>
+    <li><a href="#s18">Five-Layer Relationship</a></li>
+    <li><a href="#s19">Boundaries and Approval</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<p class="intro">
+Layer 4 defines the reusable functional systems that make the
+Interactive Knowledge Lexicon work consistently across its pages.
+It connects the learner experience, concept-page structure and
+authoritative content through shared mechanisms.
+</p>
+
+<div class="principle">
+<strong>Central principle:</strong>
+Build the shared mechanism once. Reuse it across concepts.
+Keep each component independent. Keep the learning content authoritative.
+</div>
+
+<section id="s1">
+<h2>1. Purpose and Objectives</h2>
+
+<p>Layer 1 defines the learner experience. Layer 2 defines how
+individual concept pages are structured and presented. Layer 3
+defines how educational content and its supporting data are organised.</p>
+
+<p><strong>Layer 4 defines the shared mechanisms that make those
+experiences function.</strong></p>
+
+<p>For example, quizzes on the Ping and Process pages should use
+the same underlying assessment system. Their questions and answers
+differ, but the mechanism that displays questions, checks answers,
+calculates scores and provides feedback is reusable.</p>
+
+<p>The objectives are to:</p>
+<ul>
+<li>Avoid rebuilding the same functionality for every concept.</li>
+<li>Provide consistent learning interactions.</li>
+<li>Make shared features easier to maintain.</li>
+<li>Allow new concepts to use existing functionality.</li>
+<li>Keep educational content separate from functional code.</li>
+<li>Prevent one malfunctioning component from unnecessarily
+disabling an entire concept page.</li>
+<li>Support future expansion without rebuilding the platform.</li>
+</ul>
+</section>
+
+<section id="s2">
+<h2>2. Scope of Layer 4</h2>
+
+<p>Layer 4 covers the reusable functional systems used across IKL:</p>
+<ol>
+<li>Shared navigation and page services.</li>
+<li>Search and concept discovery functionality.</li>
+<li>Quiz and assessment mechanisms.</li>
+<li>Interactive simulations.</li>
+<li>Diagrams and visual learning mechanisms.</li>
+<li>Calculations and interactive problem-solving.</li>
+<li>Learning progress and completion tracking.</li>
+<li>Revision and knowledge reinforcement.</li>
+<li>Shared glossary and references.</li>
+<li>Accessibility and interaction support.</li>
+<li>Cross-feature communication and reusable services.</li>
+<li>Error handling and independent component operation.</li>
+</ol>
+
+<p>Layer 4 does not redefine the educational structure of a
+concept page or the content schema established in Layer 3.
+It provides the functional mechanisms that operate with those structures.</p>
+</section>
+
+<section id="s3">
+<h2>3. Core Architectural Principle</h2>
+
+<h3>One shared learning system, many independent concepts</h3>
+
+<p>Every concept should be able to use the same collection of
+reusable functional mechanisms.</p>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Educational Content</th>
+<th>Shared Functionality</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ping</td>
+<td>Networking explanations</td>
+<td>Quiz, simulation, progress</td>
+</tr>
+<tr>
+<td>Process</td>
+<td>Operating system explanations</td>
+<td>Quiz, simulation, progress</td>
+</tr>
+<tr>
+<td>API</td>
+<td>Software development explanations</td>
+<td>Quiz, interactive example, progress</td>
+</tr>
+<tr>
+<td>Encryption</td>
+<td>Cybersecurity explanations</td>
+<td>Quiz, simulation, progress</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>The concept supplies its own educational material and
+configuration. The shared system interprets that information
+and provides the appropriate interaction.</p>
+
+<h3>Separation of responsibilities</h3>
+<ul>
+<li><strong>Content:</strong> What the learner is taught.</li>
+<li><strong>Presentation:</strong> How the learner sees the information.</li>
+<li><strong>Functionality:</strong> How the learner interacts with it.</li>
+</ul>
+
+<p>This separation makes the platform reusable and easier to maintain.</p>
+</section>
+
+<section id="s4">
+<h2>4. Shared Navigation and Page Services</h2>
+
+<p>IKL requires consistent navigation between its pages and
+learning features.</p>
+
+<p>Shared navigation mechanisms should support:</p>
+<ul>
+<li>Returning to the homepage.</li>
+<li>Moving between concept sections.</li>
+<li>Moving to related concepts.</li>
+<li>Opening prerequisite concepts.</li>
+<li>Navigating between learning categories.</li>
+<li>Returning to a previous learning position where supported.</li>
+<li>Providing consistent navigation controls across concept pages.</li>
+</ul>
+
+<p>Navigation should respect the concept relationships defined
+in Layer 3. The shared navigation system provides the mechanism;
+the concept registry provides the relevant destination information.</p>
+</section>
+
+<section id="s5">
+<h2>5. Search and Concept Discovery</h2>
+
+<p>The search mechanism should provide a consistent way to find
+concepts throughout IKL. It should use the central concept registry
+established in Layer 3.</p>
+
+<p>Expected capabilities include:</p>
+<ul>
+<li>Searching by concept name.</li>
+<li>Searching by recognised alternative terms.</li>
+<li>Searching by relevant keywords.</li>
+<li>Displaying matching concepts.</li>
+<li>Showing category information.</li>
+<li>Opening the correct concept page.</li>
+<li>Respecting publication status.</li>
+<li>Avoiding links to unpublished or unavailable concepts.</li>
+</ul>
+
+<p>Search should not maintain an independent, conflicting list
+of concepts. The central registry remains the authoritative source
+for concept identity and publication information.</p>
+</section>
+
+<section id="s6">
+<h2>6. Shared Quiz and Assessment Engine</h2>
+
+<p>The assessment engine provides reusable mechanisms for testing
+learner understanding. Individual concepts supply their own
+questions, answers, explanations and assessment configuration.
+The shared engine handles the interaction.</p>
+
+<h3>Expected capabilities</h3>
+<ul>
+<li>Displaying questions and answer choices.</li>
+<li>Accepting learner responses.</li>
+<li>Checking answers.</li>
+<li>Providing immediate feedback.</li>
+<li>Explaining why an answer is correct or incorrect.</li>
+<li>Calculating scores where appropriate.</li>
+<li>Displaying completion results.</li>
+<li>Supporting different question formats.</li>
+<li>Recording assessment completion where permitted.</li>
+<li>Supporting retry and revision.</li>
+</ul>
+
+<h3>Possible question formats</h3>
+<ul>
+<li>Multiple-choice questions.</li>
+<li>True-or-false questions.</li>
+<li>Matching exercises.</li>
+<li>Ordering or sequencing exercises.</li>
+<li>Short-answer questions.</li>
+<li>Scenario-based questions.</li>
+<li>Practical problem-solving questions.</li>
+</ul>
+
+<p>The architecture should allow additional question formats
+to be introduced without rebuilding every concept page.</p>
+
+<h3>Educational feedback</h3>
+<p>Assessment should teach, not merely judge.</p>
+
+<p>For an incorrect answer, the engine should be capable of
+displaying the correct answer, explaining why it is correct,
+explaining why the selected answer was incorrect, and identifying
+which concept explanation the learner should revisit.</p>
+
+<p>The assessment mechanism is shared, but the educational
+feedback is supplied by the relevant concept content.</p>
+</section>
+
+<section id="s7">
+<h2>7. Shared Interactive Simulation Engine</h2>
+
+<p>Simulations allow learners to experiment with an educational
+concept rather than only read about it. The shared simulation
+mechanism should provide reusable interaction capabilities.</p>
+
+<h3>Expected capabilities</h3>
+<ul>
+<li>Accepting learner input.</li>
+<li>Responding to user actions.</li>
+<li>Updating visual states.</li>
+<li>Displaying the result of an action.</li>
+<li>Allowing the learner to reset an experiment.</li>
+<li>Providing instructions and explanations.</li>
+<li>Supporting different simulation types.</li>
+<li>Handling invalid inputs safely.</li>
+</ul>
+
+<h3>Examples</h3>
+<ul>
+<li><strong>Ping simulation:</strong> A learner selects a destination
+device and observes whether a simulated connection succeeds or fails.</li>
+<li><strong>Operating system process simulation:</strong> A learner
+observes how processes compete for CPU time.</li>
+<li><strong>Virtual memory simulation:</strong> A learner explores
+how logical addresses are translated into physical memory locations.</li>
+<li><strong>Encryption simulation:</strong> A learner observes how
+a simplified encryption example transforms readable information.</li>
+</ul>
+
+<p>These are examples of how the shared simulation mechanism
+could be used. They are not instructions to implement these
+simulations immediately.</p>
+
+<p>A simulation should operate as an independent component.
+If it fails, the surrounding educational explanation and other
+working page features should remain available wherever technically possible.</p>
+</section>
+
+<section id="s8">
+<h2>8. Shared Diagram and Visual Learning Mechanism</h2>
+
+<p>IKL uses diagrams to make technical concepts easier to understand.
+Layer 4 provides reusable mechanisms for presenting and interacting
+with diagrams.</p>
+
+<h3>Supported visual formats</h3>
+<ul>
+<li>Static diagrams.</li>
+<li>Flowcharts.</li>
+<li>Sequence diagrams.</li>
+<li>Process diagrams.</li>
+<li>Component diagrams.</li>
+<li>Relationship diagrams.</li>
+<li>Step-by-step visual explanations.</li>
+<li>Interactive diagrams.</li>
+</ul>
+
+<h3>Expected capabilities</h3>
+<ul>
+<li>Displaying diagrams consistently.</li>
+<li>Supporting diagrams supplied by concept content.</li>
+<li>Providing labels and explanations.</li>
+<li>Supporting zoom or enlargement where appropriate.</li>
+<li>Highlighting selected components.</li>
+<li>Showing relationships between components.</li>
+<li>Supporting step-by-step visual sequences.</li>
+</ul>
+
+<p>The architecture may use SVG, Mermaid or other appropriate
+visual technologies. The precise rendering technology can be
+selected during implementation without changing the educational
+responsibility of this layer.</p>
+</section>
+
+<section id="s9">
+<h2>9. Shared Calculation and Problem-Solving Mechanisms</h2>
+
+<p>Some concepts require learners to enter values and observe
+calculated results. IKL should support reusable calculation mechanisms.</p>
+
+<h3>Examples</h3>
+<ul>
+<li>Binary and decimal conversion.</li>
+<li>Memory address calculations.</li>
+<li>Page-number and offset calculations.</li>
+<li>Network-related calculations.</li>
+<li>Algorithmic problem-solving exercises.</li>
+</ul>
+
+<h3>Expected capabilities</h3>
+<ul>
+<li>Accepting learner inputs.</li>
+<li>Validating input formats.</li>
+<li>Performing the configured calculation.</li>
+<li>Displaying results.</li>
+<li>Explaining the calculation steps.</li>
+<li>Showing appropriate error messages.</li>
+<li>Allowing learners to try again.</li>
+</ul>
+
+<p>The calculation mechanism should be reusable. Individual
+concepts provide the relevant formulas, parameters, instructions
+and educational explanations.</p>
+</section>
+
+<section id="s10">
+<h2>10. Shared Learning Progress Mechanism</h2>
+
+<p>Layer 1 establishes the learner experience and the importance
+of learning continuity. Layer 4 provides the reusable mechanisms
+that support it.</p>
+
+<h3>Potential progress information</h3>
+<ul>
+<li>Sections viewed or completed.</li>
+<li>Assessments attempted.</li>
+<li>Assessment completion.</li>
+<li>Simulation completion where applicable.</li>
+<li>Concept completion.</li>
+<li>Revision activity.</li>
+<li>Learning milestones.</li>
+</ul>
+
+<h3>Expected capabilities</h3>
+<ul>
+<li>Recording supported learning events.</li>
+<li>Calculating completion states.</li>
+<li>Displaying progress indicators.</li>
+<li>Restoring progress where persistence is available.</li>
+<li>Communicating progress to other learner-facing features.</li>
+<li>Supporting appropriate privacy and data controls.</li>
+</ul>
+
+<div class="warning">
+<strong>Important distinction:</strong>
+Viewing a page does not necessarily mean that the learner
+understands it. Progress indicators should distinguish content
+viewed, activity attempted, assessment completed and concept
+marked as completed. The system must not automatically claim
+mastery simply because a learner opened a page.
+</div>
+</section>
+
+<section id="s11">
+<h2>11. Shared Revision and Knowledge Reinforcement</h2>
+
+<p>IKL should provide reusable mechanisms for helping learners
+revisit previously studied material.</p>
+
+<h3>Expected capabilities</h3>
+<ul>
+<li>Revisiting important explanations.</li>
+<li>Reattempting assessments.</li>
+<li>Displaying revision questions.</li>
+<li>Highlighting important terms.</li>
+<li>Connecting revision activities to relevant concepts.</li>
+<li>Supporting quick-revision material.</li>
+<li>Connecting prerequisite and related concepts.</li>
+</ul>
+
+<p>The revision mechanism should be capable of using the Quick
+Revision section defined in Layer 2. The educational content
+remains owned by the concept; the shared mechanism provides
+the means to revisit it.</p>
+</section>
+
+<section id="s12">
+<h2>12. Shared Glossary and References</h2>
+
+<p>Technical concepts frequently introduce unfamiliar terminology
+and external sources. IKL should provide shared mechanisms for
+accessing this supporting knowledge.</p>
+
+<h3>Glossary functionality</h3>
+<ul>
+<li>Displaying definitions of technical terms.</li>
+<li>Linking terms to relevant concepts.</li>
+<li>Supporting consistent terminology across pages.</li>
+<li>Providing contextual explanations where appropriate.</li>
+</ul>
+
+<h3>Reference functionality</h3>
+<ul>
+<li>Displaying references associated with a concept.</li>
+<li>Providing source titles and relevant links.</li>
+<li>Supporting consistent reference presentation.</li>
+<li>Keeping reference information separate from page-rendering code.</li>
+</ul>
+
+<p>The shared glossary and references established in Layer 3
+remain the authoritative supporting resources. Layer 4 provides
+the mechanisms for displaying and accessing them.</p>
+</section>
+
+<section id="s13">
+<h2>13. Accessibility and Interaction Support</h2>
+
+<p>Shared functionality must support an accessible learning experience.</p>
+
+<ul>
+<li>Keyboard accessibility where supported.</li>
+<li>Screen-reader-friendly interaction.</li>
+<li>Clear labels for controls.</li>
+<li>Understandable feedback messages.</li>
+<li>Sufficient visual contrast.</li>
+<li>Visible focus indicators.</li>
+<li>Alternatives to interactions that depend exclusively on colour.</li>
+<li>Clear instructions for simulations and assessments.</li>
+<li>Appropriate touch interaction on mobile and tablet devices.</li>
+</ul>
+
+<p>Accessibility should be considered within each reusable
+component rather than added as an afterthought to individual concepts.</p>
+</section>
+
+<section id="s14">
+<h2>14. Cross-Feature Services and Communication</h2>
+
+<p>IKL contains several features that need to communicate with one another.</p>
+
+<p>For example:</p>
+<ul>
+<li>Completing a quiz may update learning progress.</li>
+<li>Completing a concept may affect a learner's learning record.</li>
+<li>Opening a prerequisite may connect to concept navigation.</li>
+<li>A glossary term may link to a concept page.</li>
+<li>A revision activity may be connected to an earlier assessment.</li>
+</ul>
+
+<p>Layer 4 should provide consistent ways for shared components
+to communicate.</p>
+
+<h3>Expected architectural principles</h3>
+<ul>
+<li>Clear interfaces between components.</li>
+<li>Predictable data exchange.</li>
+<li>Reusable event or notification mechanisms where appropriate.</li>
+<li>Avoiding unnecessary dependencies between components.</li>
+<li>Avoiding duplicated functionality.</li>
+<li>Keeping responsibilities clearly separated.</li>
+</ul>
+
+<p>A component should not need to know the internal implementation
+details of every other component it communicates with.</p>
+</section>
+
+<section id="s15">
+<h2>15. Modular Components and Independent Failure</h2>
+
+<p>A central requirement of Layer 4 is that reusable components
+should operate as independently as reasonably possible.</p>
+
+<p>For example, if the quiz component fails:</p>
+<ul>
+<li>The concept explanation should remain accessible.</li>
+<li>The glossary should continue to work.</li>
+<li>Navigation should remain available.</li>
+<li>An unrelated simulation should not automatically stop working.</li>
+</ul>
+
+<p>If a diagram cannot load, the surrounding educational
+explanation should remain available and an appropriate error
+or alternative presentation should be shown where possible.</p>
+
+<h3>Expected safeguards</h3>
+<ul>
+<li>Independent component initialisation.</li>
+<li>Input validation.</li>
+<li>Graceful error handling.</li>
+<li>Clear error messages.</li>
+<li>Protection against one component unnecessarily disabling another.</li>
+<li>Appropriate fallback behaviour.</li>
+<li>Diagnostic information for later investigation.</li>
+</ul>
+
+<p>This principle does not mean every failure can be isolated
+completely. It means the architecture should minimise unnecessary
+failure propagation.</p>
+</section>
+
+<section id="s16">
+<h2>16. Technical Architecture and Implementation Considerations</h2>
+
+<p>Layer 4 defines functional responsibilities rather than locking
+the project into an unapproved implementation.</p>
+
+<p>The existing project uses HTML, CSS and JavaScript. The
+architecture should favour reusable JavaScript modules and
+shared components compatible with the existing GitHub Pages environment.</p>
+
+<h3>Possible functional modules</h3>
+<ul>
+<li>Navigation service.</li>
+<li>Search service.</li>
+<li>Assessment engine.</li>
+<li>Simulation engine.</li>
+<li>Diagram renderer.</li>
+<li>Calculation engine.</li>
+<li>Progress service.</li>
+<li>Revision service.</li>
+<li>Glossary and reference service.</li>
+<li>Accessibility utilities.</li>
+<li>Shared error-handling mechanisms.</li>
+</ul>
+
+<p>These are conceptual module responsibilities, not a final
+approved file or folder structure.</p>
+
+<h3>Technology principles</h3>
+<ul>
+<li>Prefer simple, maintainable solutions.</li>
+<li>Reuse existing project capabilities where appropriate.</li>
+<li>Avoid unnecessary frameworks or infrastructure.</li>
+<li>Keep content separate from functional code.</li>
+<li>Avoid making a backend mandatory without a demonstrated requirement.</li>
+<li>Consider iPad-compatible development and testing workflows.</li>
+<li>Preserve the existing working website.</li>
+</ul>
+
+<p>Any specific library, framework, storage mechanism or service
+should be evaluated before implementation.</p>
+</section>
+
+<section id="s17">
+<h2>17. Quality Assurance and Testing Requirements</h2>
+
+<p>Shared functionality must be tested independently and as part
+of the complete learning experience.</p>
+
+<h3>Functional testing</h3>
+<ul>
+<li>Does each component perform its intended function?</li>
+<li>Does the quiz engine check answers correctly?</li>
+<li>Do simulations respond appropriately?</li>
+<li>Do calculations produce correct results?</li>
+<li>Does progress update correctly?</li>
+<li>Do glossary and reference links work?</li>
+</ul>
+
+<h3>Integration testing</h3>
+<ul>
+<li>Does Layer 4 work with Layer 2's concept-page structure?</li>
+<li>Does it correctly interpret Layer 3 content and configuration?</li>
+<li>Does search use the central concept registry?</li>
+<li>Does assessment completion communicate with progress?</li>
+<li>Do concept relationships support navigation?</li>
+</ul>
+
+<h3>Failure testing</h3>
+<ul>
+<li>What happens when a component cannot load?</li>
+<li>What happens when required data is missing?</li>
+<li>What happens when a learner enters invalid information?</li>
+<li>Can unrelated features continue operating?</li>
+</ul>
+
+<h3>Device and accessibility testing</h3>
+<ul>
+<li>Does the functionality work on an iPad?</li>
+<li>Are touch controls usable?</li>
+<li>Are instructions understandable?</li>
+<li>Can supported interactions be accessed without a mouse?</li>
+<li>Are errors and results communicated clearly?</li>
+</ul>
+
+<p>No component should be considered complete merely because
+it appears on the screen. Its behaviour must also be tested.</p>
+</section>
+
+<section id="s18">
+<h2>18. Relationship with the Five IKL Layers</h2>
+
+<div class="layer-item">
+<strong>Layer 1 — Learner Experience</strong><br>
+Defines what learners should be able to experience and accomplish.
+</div>
+
+<div class="layer-item">
+<strong>Layer 2 — Concept Page and Template</strong><br>
+Defines how concept information and learning activities are structured and presented.
+</div>
+
+<div class="layer-item">
+<strong>Layer 3 — Content and Data</strong><br>
+Defines the authoritative educational content, concept registry,
+relationships and supporting knowledge resources.
+</div>
+
+<div class="layer-item">
+<strong>Layer 4 — Shared Functionality</strong><br>
+Provides the reusable mechanisms that make the learning activities
+and shared features work.
+</div>
+
+<div class="layer-item">
+<strong>Layer 5 — Quality, Automation and Publishing</strong><br>
+Defines the quality controls, validation workflows, deployment,
+monitoring, backup and recovery processes.
+</div>
+
+<h3>How the layers work together</h3>
+
+<p>A concept's educational content is defined in Layer 3.
+Layer 2 provides its page structure. Layer 4 supplies the reusable
+functionality required by that page. Layer 1 defines the
+learner-facing experience. Layer 5 governs the quality and
+controlled publication of the finished system.</p>
+</section>
+
+<section id="s19">
+<h2>19. Implementation Boundaries and Approval Record</h2>
+
+<p>This document defines the architecture for Layer 4.
+It does not authorise immediate implementation.</p>
+
+<div class="warning">
+<strong>Project protection rules</strong>
+<ul>
+<li>No repository restructuring.</li>
+<li>No file renaming or moving.</li>
+<li>No replacement of existing working pages.</li>
+<li>No modification of the existing Ping page.</li>
+<li>No creation of new shared engines in GitHub.</li>
+<li>No adoption of a new framework or backend without evaluation and approval.</li>
+<li>No automatic publication that bypasses human approval.</li>
+</ul>
+The existing GitHub Pages site must remain intact while the
+architecture is being reviewed.
+</div>
+
+<h3>Required approval sequence</h3>
+<ol>
+<li>Complete the normal-text Layer 4 architecture document.</li>
+<li>Review its contents.</li>
+<li>Make any requested corrections.</li>
+<li>Obtain explicit approval.</li>
+<li>Create the matching HTML architecture document.</li>
+<li>Add the approved HTML document to GitHub.</li>
+<li>Verify that it opens correctly.</li>
+<li>Proceed to Layer 5.</li>
+</ol>
+
+<h3>Approval status</h3>
+<ul>
+<li><strong>Layer 4 normal-text document:</strong> Approved for HTML conversion by the user's instruction to create this HTML.</li>
+<li><strong>Layer 4 architecture implementation:</strong> Not yet authorised.</li>
+<li><strong>Layer 4 implementation:</strong> Not yet authorised.</li>
+</ul>
+</section>
+
+<div class="principle">
+<strong>Final Architectural Principle</strong>
+
+<p>The purpose of Layer 4 is to make IKL a reusable learning
+platform rather than a collection of individually constructed
+educational pages.</p>
+
+<p>A new concept should be able to use the shared learning
+mechanisms without requiring those mechanisms to be rebuilt.</p>
+
+<strong>Build the shared mechanism once. Reuse it across concepts.
+Keep each component independent. Keep the learning content authoritative.</strong>
+</div>
+
+</main>
+</div>
+
+<footer>
+  Explore. Understand. Experiment.
+  <strong>Created by Amir Khan.</strong>
+  <p><a href="#top">Back to top ↑</a></p>
+</footer>
+
+</div>
+</body>
+</html>
