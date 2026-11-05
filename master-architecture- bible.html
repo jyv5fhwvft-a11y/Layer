@@ -1,0 +1,1528 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>IKL | Master Architecture Bible</title>
+
+<style>
+:root {
+  --navy: #142b4a;
+  --blue: #2563eb;
+  --light-blue: #eaf2ff;
+  --background: #f4f7fb;
+  --white: #ffffff;
+  --text: #26364a;
+  --muted: #617187;
+  --teal: #0f8b83;
+  --amber: #b7791f;
+  --border: #dce5ef;
+  --shadow: 0 5px 18px rgba(20,43,74,.07);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.7;
+}
+
+header {
+  background: linear-gradient(135deg, #142b4a, #2459a6);
+  color: white;
+  text-align: center;
+  padding: 55px 20px;
+}
+
+.eyebrow {
+  font-size: 13px;
+  letter-spacing: 2px;
+  font-weight: bold;
+  opacity: .85;
+}
+
+header h1 {
+  font-size: clamp(30px, 5vw, 46px);
+  margin: 15px 0;
+}
+
+header p {
+  max-width: 780px;
+  margin: 10px auto;
+  color: #e4edff;
+  font-size: 17px;
+}
+
+.tagline {
+  margin-top: 24px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.meta span {
+  background: rgba(255,255,255,.14);
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 0 18px;
+}
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 26px;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow);
+}
+
+.card h2 {
+  color: var(--navy);
+  font-size: 23px;
+  margin-top: 0;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--light-blue);
+}
+
+h3 {
+  color: #2459a6;
+  margin-top: 23px;
+  font-size: 18px;
+}
+
+h4 {
+  color: var(--navy);
+  margin-bottom: 5px;
+}
+
+p { margin: 10px 0; }
+
+ul, ol { padding-left: 25px; }
+
+li { margin-bottom: 7px; }
+
+.notice {
+  background: #fff6e5;
+  border-left: 5px solid var(--amber);
+  border-radius: 8px;
+  padding: 18px 20px;
+  margin-bottom: 22px;
+}
+
+.principle {
+  background: var(--light-blue);
+  border-left: 4px solid var(--blue);
+  border-radius: 7px;
+  padding: 16px 19px;
+  margin: 17px 0;
+}
+
+.success {
+  background: #e8f7f3;
+  border-left: 4px solid var(--teal);
+  border-radius: 7px;
+  padding: 16px 19px;
+  margin: 17px 0;
+}
+
+.warning {
+  background: #fff6e5;
+  border-left: 4px solid var(--amber);
+  border-radius: 7px;
+  padding: 16px 19px;
+  margin: 17px 0;
+}
+
+.toc a {
+  color: var(--blue);
+  text-decoration: none;
+}
+
+.toc a:hover { text-decoration: underline; }
+
+.toc li { margin-bottom: 8px; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 18px 0;
+  font-size: 14px;
+}
+
+th, td {
+  border: 1px solid var(--border);
+  padding: 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background: var(--light-blue);
+  color: var(--navy);
+}
+
+.layer-card {
+  background: #fbfdff;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 18px;
+  margin: 14px 0;
+}
+
+.layer-number {
+  color: var(--blue);
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 13px;
+}
+
+.stage {
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 18px;
+  margin: 14px 0;
+  background: #fbfdff;
+}
+
+.boundary {
+  background: #f0f4f9;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 20px;
+}
+
+footer {
+  background: var(--navy);
+  color: white;
+  text-align: center;
+  padding: 30px 15px;
+  margin-top: 45px;
+}
+
+footer p { margin: 5px; }
+
+footer .credit {
+  font-weight: bold;
+  color: #d9e8ff;
+}
+
+@media(max-width:600px) {
+  header { padding: 38px 17px; }
+  .card { padding: 19px; }
+  .card h2 { font-size: 20px; }
+  table { font-size: 12px; }
+  th, td { padding: 8px; }
+}
+
+@media print {
+  body { background: white; }
+  .card { box-shadow: none; break-inside: avoid; }
+  header { background: var(--navy); }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="eyebrow">INTERACTIVE KNOWLEDGE LEXICON</div>
+
+  <h1>Master Architecture Bible</h1>
+
+  <p>
+    The unified architectural foundation, structure,
+    relationships and governance of the complete IKL platform.
+  </p>
+
+  <div class="tagline">Explore. Understand. Experiment.</div>
+
+  <div class="meta">
+    <span>Master Architecture Document</span>
+    <span>Edition 1.0</span>
+    <span>Five-Layer Architecture</span>
+    <span>Consolidated Draft</span>
+  </div>
+</header>
+
+<main class="container">
+
+<div class="notice">
+  <strong>Important architectural boundary:</strong>
+  This document defines the intended architecture of IKL.
+  It does not authorise repository restructuring, file migration,
+  modification of existing working features, implementation
+  or deployment changes. Such actions require separate approval.
+</div>
+
+<!-- PART I -->
+
+<section class="card">
+<h2>PART I — MASTER ARCHITECTURE FOUNDATION</h2>
+</section>
+
+<section class="card" id="s1">
+<h2>1. Executive Overview</h2>
+
+<p>
+The Interactive Knowledge Lexicon (IKL) is an educational
+platform designed to explain technical concepts and knowledge
+in a structured, progressive, accessible and interactive manner.
+</p>
+
+<p>
+Its purpose is to help learners move beyond memorising
+definitions and develop genuine understanding.
+</p>
+
+<p>IKL combines:</p>
+<ul>
+<li>Clear explanations of technical concepts.</li>
+<li>Progressive learning from simple to advanced levels.</li>
+<li>Analogies and practical examples.</li>
+<li>Diagrams, flowcharts and visual explanations.</li>
+<li>Interactive simulations and demonstrations.</li>
+<li>Knowledge assessments and revision.</li>
+<li>Learning progress and development pathways.</li>
+<li>Reusable content and shared technical functionality.</li>
+<li>Quality assurance and controlled publishing.</li>
+</ul>
+
+<p>
+The platform is designed as an integrated educational
+ecosystem rather than a collection of disconnected articles.
+</p>
+
+<p>
+This Master Architecture Bible consolidates the five architecture
+layers into one unified reference. It establishes their
+responsibilities, relationships, boundaries, principles and governance.
+</p>
+</section>
+
+<section class="card" id="s2">
+<h2>2. Vision and Mission</h2>
+
+<h3>2.1 Vision</h3>
+<p>
+To build an interactive knowledge platform that makes complex
+technical subjects understandable, explorable and practically
+meaningful for learners at different levels of experience.
+</p>
+
+<h3>2.2 Mission</h3>
+<p>To transform technical knowledge into structured learning experiences that allow people to:</p>
+<ol>
+<li>Discover a concept.</li>
+<li>Understand its meaning.</li>
+<li>Develop a mental model.</li>
+<li>Explore how it works.</li>
+<li>Experiment with its behaviour.</li>
+<li>Test their understanding.</li>
+<li>Connect it with other concepts.</li>
+<li>Apply the knowledge in practical situations.</li>
+<li>Build demonstrable skills.</li>
+<li>Continue learning independently.</li>
+</ol>
+
+<h3>2.3 Educational Philosophy</h3>
+<div class="principle">
+<strong>Start simple. Build understanding. Introduce technical depth.
+Demonstrate practical application. Encourage independent exploration.</strong>
+</div>
+<p>
+A learner should not need advanced technical knowledge before
+being able to understand the basic purpose of a concept.
+</p>
+</section>
+
+<section class="card" id="s3">
+<h2>3. Core Design Principles</h2>
+
+<h3>3.1 Understandability</h3>
+<p>Explanations must be accessible to the intended learning level.</p>
+
+<h3>3.2 Progressive Depth</h3>
+<p>Knowledge should progress from introductory understanding towards advanced technical detail.</p>
+
+<h3>3.3 Consistency</h3>
+<p>Concept pages should follow a common educational structure.</p>
+
+<h3>3.4 Reusability</h3>
+<p>Common functionality, content structures and presentation mechanisms should be reusable.</p>
+
+<h3>3.5 Interactivity</h3>
+<p>Where useful, learners should be able to experiment with concepts rather than only read about them.</p>
+
+<h3>3.6 Accuracy</h3>
+<p>Educational content and technical behaviour must be checked for correctness.</p>
+
+<h3>3.7 Accessibility</h3>
+<p>The platform should accommodate different devices, screen sizes and accessibility requirements.</p>
+
+<h3>3.8 Learner-Centred Design</h3>
+<p>Features should serve meaningful learning objectives rather than exist merely because they are technically possible.</p>
+
+<h3>3.9 Controlled Evolution</h3>
+<p>IKL should evolve through documented, reviewed and authorised changes.</p>
+
+<h3>3.10 Creator-Led Learning</h3>
+<p>
+The development of IKL should also support the creator's own
+technical education through the Learn as You Create approach.
+</p>
+</section>
+
+<!-- PART II -->
+
+<section class="card">
+<h2>PART II — THE FIVE-LAYER ARCHITECTURE</h2>
+</section>
+
+<section class="card" id="s4">
+<h2>4. Unified Five-Layer Model</h2>
+
+<p>
+The IKL architecture consists of five complementary layers.
+Each layer has a distinct responsibility. Together, they define
+the complete platform.
+</p>
+
+<div class="layer-card">
+<div class="layer-number">LAYER 1</div>
+<h3>Learner Experience</h3>
+<p>Defines what learners experience, how they discover knowledge, how they learn, and how they progress.</p>
+</div>
+
+<div class="layer-card">
+<div class="layer-number">LAYER 2</div>
+<h3>Concept Page and Template</h3>
+<p>Defines how individual concepts are structured, presented, explained and explored.</p>
+</div>
+
+<div class="layer-card">
+<div class="layer-number">LAYER 3</div>
+<h3>Content and Data</h3>
+<p>Defines how educational knowledge is organised, represented, stored, related, versioned and supplied to the platform.</p>
+</div>
+
+<div class="layer-card">
+<div class="layer-number">LAYER 4</div>
+<h3>Shared Functionality</h3>
+<p>Defines the reusable mechanisms and services that support multiple pages and learning experiences.</p>
+</div>
+
+<div class="layer-card">
+<div class="layer-number">LAYER 5</div>
+<h3>Quality, Automation and Publishing</h3>
+<p>Defines how content, functionality and releases are validated, tested, protected, published and maintained.</p>
+</div>
+
+<h3>4.1 Architecture at a Glance</h3>
+<table>
+<thead>
+<tr><th>Layer</th><th>Name</th><th>Central Question</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>Learner Experience</td><td>What does the learner experience?</td></tr>
+<tr><td>2</td><td>Concept Page and Template</td><td>How is each concept taught?</td></tr>
+<tr><td>3</td><td>Content and Data</td><td>How is knowledge organised?</td></tr>
+<tr><td>4</td><td>Shared Functionality</td><td>How do reusable features work?</td></tr>
+<tr><td>5</td><td>Quality, Automation and Publishing</td><td>How is the platform protected and released?</td></tr>
+</tbody>
+</table>
+
+<h3>4.2 Architectural Relationship</h3>
+<p>
+The five layers are not five independent products.
+They are five responsibilities within one platform.
+The learner experience uses the concept-page architecture.
+Concept pages consume structured content. Shared functionality
+supports common learning activities. Quality and publishing
+controls protect the complete system.
+</p>
+</section>
+
+<!-- PART III -->
+
+<section class="card">
+<h2>PART III — LAYER 1: LEARNER EXPERIENCE</h2>
+</section>
+
+<section class="card" id="s5">
+<h2>5. Layer 1 — Learner Experience Architecture</h2>
+
+<h3>5.1 Purpose</h3>
+<p>
+Layer 1 defines the complete learner-facing experience of IKL.
+It establishes what learners can discover, understand, practise,
+record and achieve through the platform.
+</p>
+
+<p>
+The official Layer 1 reference is the Learner Experience
+Consolidated Edition 2.0. It consolidates all 126 original
+approved decisions.
+</p>
+
+<h3>5.2 Learner Experience Domains</h3>
+
+<h4>Domain 1 — Homepage, Discovery and Navigation</h4>
+<p>Defines how learners enter the platform, discover subjects, explore categories and navigate between learning resources.</p>
+
+<h4>Domain 2 — Reading, Understanding and Accessibility</h4>
+<p>Defines the reading experience, presentation clarity, comprehension support and accessibility expectations.</p>
+
+<h4>Domain 3 — Progressive and Personalised Learning</h4>
+<p>Defines how learners move through different levels of understanding and receive learning experiences suited to their progress.</p>
+
+<h4>Domain 4 — Goals, Learning Records, Portfolios and Skills</h4>
+<p>Defines how learning objectives, achievements, records, portfolios and skill development are represented.</p>
+
+<h4>Domain 5 — Career Development and Employment Readiness</h4>
+<p>Defines how educational knowledge connects to career preparation and employment development. The consolidated design includes 18 career pathways.</p>
+
+<h4>Domain 6 — Interview Preparation and Technical Challenges</h4>
+<p>Defines interview preparation and technical challenge experiences.</p>
+<ul>
+<li>Three interview preparation modes.</li>
+<li>Six evaluation dimensions.</li>
+<li>STAR-based response support.</li>
+</ul>
+
+<h4>Domain 7 — Technical Projects and Practical Experience</h4>
+<p>Defines how learners connect knowledge with practical projects and demonstrable experience.</p>
+
+<h4>Domain 8 — Mentoring</h4>
+<p>Defines mentoring-related learner experiences and support.</p>
+
+<h4>Domain 9 — Learner Support, Help and Community</h4>
+<p>Defines support mechanisms through which learners can seek assistance and engage with the learning environment.</p>
+
+<h3>5.3 Cross-Feature Principles</h3>
+<ul>
+<li>Consistency between learner-facing features.</li>
+<li>Accessibility and device support.</li>
+<li>Privacy and security.</li>
+<li>Clear learning progression.</li>
+<li>Meaningful learner feedback.</li>
+<li>Separation of educational objectives from technical implementation.</li>
+<li>Support for the creator's Learn as You Create journey.</li>
+</ul>
+
+<h3>5.4 Architectural Responsibility</h3>
+<p>
+Layer 1 specifies the intended learner experience. It does not
+independently prescribe the complete technical implementation.
+Layers 2, 3 and 4 provide the structures and mechanisms needed
+to support it. Layer 5 provides quality controls.
+</p>
+
+<h3>5.5 Preservation Requirement</h3>
+<p>
+All 126 approved decisions must remain traceable to the official
+Layer 1 Edition 2.0 reference. This Master Bible consolidates
+their domains but does not replace the detailed decision register.
+</p>
+</section>
+
+<!-- PART IV -->
+
+<section class="card">
+<h2>PART IV — LAYER 2: CONCEPT PAGE AND TEMPLATE</h2>
+</section>
+
+<section class="card" id="s6">
+<h2>6. Layer 2 — Concept Page and Template Architecture</h2>
+
+<h3>6.1 Purpose</h3>
+<p>
+Layer 2 defines the standard architecture for presenting and
+teaching an individual concept. It establishes a reusable
+teaching framework so concepts across different technical
+subjects maintain a consistent educational experience.
+</p>
+
+<h3>6.2 The Concept Page as a Reusable Learning Unit</h3>
+<p>A concept page should provide:</p>
+<ul>
+<li>Concept identity.</li>
+<li>A clear definition.</li>
+<li>Progressive explanations.</li>
+<li>A mental model.</li>
+<li>Technical depth.</li>
+<li>Visual learning.</li>
+<li>Practical application.</li>
+<li>Interactive exploration where appropriate.</li>
+<li>Knowledge assessment.</li>
+<li>Revision support.</li>
+</ul>
+
+<h3>6.3 The Approved 15-Section Teaching Structure</h3>
+<ol>
+<li><strong>Concept Identity and Definition</strong> — identifies the concept, category and precise meaning.</li>
+<li><strong>First-Grader Explanation</strong> — introduces the concept in exceptionally simple language.</li>
+<li><strong>Analogy and Mental Model</strong> — uses familiar comparisons to build a mental picture.</li>
+<li><strong>Beginner Explanation</strong> — develops the basic explanation using accessible technical language.</li>
+<li><strong>Technical Explanation</strong> — introduces accurate terminology and deeper technical detail.</li>
+<li><strong>Components and Architecture</strong> — explains important parts and structural relationships.</li>
+<li><strong>Working Mechanism</strong> — explains how the concept operates step by step.</li>
+<li><strong>Interactive Simulation</strong> — allows experimentation where a suitable simulation is possible.</li>
+<li><strong>Flowchart and Sequence Diagram</strong> — shows processes, relationships and sequences visually.</li>
+<li><strong>Practical Example</strong> — connects the concept to real situations and practical use.</li>
+<li><strong>Common Mistakes and Misconceptions</strong> — identifies misunderstandings and clarifies them.</li>
+<li><strong>Limitations and Troubleshooting</strong> — explains limitations, failure conditions and investigation methods.</li>
+<li><strong>Connections to Other Concepts</strong> — shows how the concept relates to other knowledge.</li>
+<li><strong>Knowledge Assessment</strong> — tests whether the learner has understood the material.</li>
+<li><strong>Quick Revision</strong> — provides a concise summary for reinforcement and recall.</li>
+</ol>
+
+<h3>6.4 Standard Presentation Principles</h3>
+<ul>
+<li>Clear headings and subheadings.</li>
+<li>Consistent visual hierarchy.</li>
+<li>Readable paragraphs.</li>
+<li>Well-structured lists.</li>
+<li>Appropriate diagrams.</li>
+<li>Clearly separated examples.</li>
+<li>Interactive elements where beneficial.</li>
+<li>Responsive layouts.</li>
+<li>Consistent navigation.</li>
+</ul>
+
+<h3>6.5 Reusability</h3>
+<p>
+The concept-page template should be reusable. Creating a new
+concept should primarily involve supplying its educational
+content and configuration rather than rebuilding the entire
+page structure.
+</p>
+
+<h3>6.6 Relationship with Layer 3</h3>
+<p>
+Layer 2 defines how content is presented. Layer 3 defines how
+content is represented and organised. Layer 2 consumes the
+structured content supplied by Layer 3. Generated HTML is a
+presentation output, not the authoritative content source.
+</p>
+
+<h3>6.7 Relationship with Layer 4</h3>
+<p>
+Layer 2 defines where shared functionality is needed.
+Layer 4 supplies reusable mechanisms such as quizzes,
+simulations, diagrams and learning-progress services.
+</p>
+
+<h3>6.8 Architectural Responsibility</h3>
+<p>
+Layer 2 owns the reusable educational page structure,
+not the complete storage system or every shared feature implementation.
+</p>
+</section>
+
+<!-- PART V -->
+
+<section class="card">
+<h2>PART V — LAYER 3: CONTENT AND DATA</h2>
+</section>
+
+<section class="card" id="s7">
+<h2>7. Layer 3 — Content and Data Architecture</h2>
+
+<h3>7.1 Purpose</h3>
+<p>
+Layer 3 defines how IKL's knowledge is represented, organised,
+connected, versioned and supplied to the rest of the platform.
+Its central responsibility is separating educational content
+from the code that displays or processes it.
+</p>
+
+<h3>7.2 Authoritative Content Principle</h3>
+<p>
+Each concept has an authoritative structured JSON representation.
+The JSON content is the source of truth for the concept's
+educational information and configuration.
+</p>
+<p>
+Generated HTML is an output produced from the authoritative
+content and rendering system. It is not the authoritative
+content source.
+</p>
+
+<h3>7.3 Central Concept Registry</h3>
+<p>Each registered concept contains:</p>
+<ul>
+<li>Permanent concept ID.</li>
+<li>Concept name.</li>
+<li>Concept slug.</li>
+<li>Category.</li>
+<li>Publication status.</li>
+<li>Content path.</li>
+<li>Content version.</li>
+</ul>
+
+<h3>7.4 Registry Responsibilities</h3>
+<ul>
+<li>Homepage discovery.</li>
+<li>Category listings.</li>
+<li>Search.</li>
+<li>Concept navigation.</li>
+<li>Publication-status awareness.</li>
+<li>Content organisation.</li>
+<li>Relationship discovery.</li>
+<li>Monitoring and validation.</li>
+</ul>
+
+<h3>7.5 Concept Content Structure</h3>
+<p>The structured content model includes:</p>
+<ul>
+<li>Concept identity and metadata.</li>
+<li>Educational explanations.</li>
+<li>Analogies and examples.</li>
+<li>Technical details.</li>
+<li>Components and mechanisms.</li>
+<li>Visual resources.</li>
+<li>Interactive resources.</li>
+<li>Relationships and prerequisites.</li>
+<li>Assessment material.</li>
+<li>Revision content.</li>
+</ul>
+
+<h3>7.6 Concept Relationships</h3>
+<ol>
+<li><strong>Prerequisite</strong> — knowledge that should be understood before studying another concept.</li>
+<li><strong>Related</strong> — another concept connected by subject or meaning.</li>
+<li><strong>Contrast</strong> — a concept that helps explain differences or comparisons.</li>
+<li><strong>Application</strong> — a concept that demonstrates where or how knowledge is used.</li>
+</ol>
+
+<h3>7.7 Shared Content Resources</h3>
+<p>Common information should be separated from individual concept files where appropriate:</p>
+<ul>
+<li>Shared glossary.</li>
+<li>References.</li>
+<li>Common examples.</li>
+</ul>
+
+<h3>7.8 Versioning</h3>
+<p><strong>Content version:</strong> identifies changes to the educational content of a concept.</p>
+<p><strong>Schema version:</strong> identifies changes to the structure or format used to represent that content.</p>
+<p>These versions must not be treated as interchangeable.</p>
+
+<h3>7.9 Publication Status</h3>
+<p>
+Concept content must have a publication status. The process
+must distinguish incomplete, under-review, approved and
+published material. A concept must not be treated as
+publication-ready merely because its file exists.
+</p>
+
+<h3>7.10 Validation Requirements</h3>
+<ul>
+<li>Missing content files.</li>
+<li>Missing required fields.</li>
+<li>Incomplete teaching sections.</li>
+<li>Invalid content structures.</li>
+<li>Broken concept relationships.</li>
+<li>Incorrect or missing registry information.</li>
+<li>Inconsistent version information.</li>
+<li>Publication-status problems.</li>
+</ul>
+
+<h3>7.11 Component Configuration</h3>
+<p>
+JSON may declare selective component configuration.
+The relevant rendering or functionality engines interpret
+that configuration. Content data and the code interpreting
+it remain separate.
+</p>
+
+<h3>7.12 Architectural Responsibility</h3>
+<p>
+Layer 3 owns the organisation and authoritative representation
+of knowledge. It does not own the visual rendering template
+or the implementation of shared functionality.
+</p>
+</section>
+
+<!-- PART VI -->
+
+<section class="card">
+<h2>PART VI — LAYER 4: SHARED FUNCTIONALITY</h2>
+</section>
+
+<section class="card" id="s8">
+<h2>8. Layer 4 — Shared Functionality Architecture</h2>
+
+<h3>8.1 Purpose</h3>
+<p>
+Layer 4 defines reusable mechanisms that support multiple
+parts of IKL. Its purpose is to prevent every concept page
+or learning feature from needing its own separate implementation
+of common functionality.
+</p>
+
+<h3>8.2 Core Architectural Principle</h3>
+<div class="principle">
+<strong>Build shared functionality once, make it reusable,
+and allow different parts of IKL to use it consistently.</strong>
+</div>
+
+<h3>8.3 Shared Navigation and Page Services</h3>
+<p>Common page services support consistent movement through IKL, including shared navigation behaviour, page-level services and movement between concepts.</p>
+
+<h3>8.4 Search and Concept Discovery</h3>
+<p>The shared search mechanism supports discovery across the concept registry and uses structured concept information supplied by Layer 3.</p>
+
+<h3>8.5 Shared Quiz and Assessment Engine</h3>
+<p>The assessment mechanism supports reusable knowledge checks, consistent question presentation, answer handling and feedback.</p>
+
+<h3>8.6 Shared Interactive Simulation Engine</h3>
+<p>The simulation mechanism supports interactive learning experiences and concept-specific configurations interpreted by a reusable engine where appropriate.</p>
+
+<h3>8.7 Shared Diagram and Visual Learning Mechanism</h3>
+<p>Visual learning services support diagrams and related representations with consistent presentation and reusable mechanisms.</p>
+
+<h3>8.8 Shared Calculation and Problem-Solving Mechanisms</h3>
+<p>Common calculation and problem-solving mechanisms should be reusable where multiple concepts require similar interactions.</p>
+
+<h3>8.9 Shared Learning-Progress Mechanism</h3>
+<p>Progress services support the tracking and presentation of learner progress where such capabilities are implemented.</p>
+
+<h3>8.10 Shared Revision and Knowledge Reinforcement</h3>
+<p>Reusable revision mechanisms support recap, reinforcement and repeated practice.</p>
+
+<h3>8.11 Shared Glossary and References</h3>
+<p>Common glossary and reference services support consistent access to shared learning resources.</p>
+
+<h3>8.12 Accessibility and Interaction Support</h3>
+<p>Shared functionality must account for accessible interaction patterns and usable controls.</p>
+
+<h3>8.13 Cross-Feature Communication</h3>
+<p>
+Shared services may need to exchange information. Their
+communication should be clearly defined so that one feature
+does not depend unnecessarily on the internal implementation
+of another.
+</p>
+
+<h3>8.14 Modular Components and Independent Failure</h3>
+<p>
+Shared components should be modular. A failure in one optional
+learning feature should not unnecessarily disable unrelated
+parts of the platform.
+</p>
+
+<h3>8.15 Architectural Responsibility</h3>
+<p>
+Layer 4 owns reusable functionality and common mechanisms.
+It does not own learner-experience decisions, authoritative
+concept content or publishing approval.
+</p>
+</section>
+
+<!-- PART VII -->
+
+<section class="card">
+<h2>PART VII — LAYER 5: QUALITY, AUTOMATION AND PUBLISHING</h2>
+</section>
+
+<section class="card" id="s9">
+<h2>9. Layer 5 — Quality, Automation and Publishing Architecture</h2>
+
+<h3>9.1 Purpose</h3>
+<p>
+Layer 5 defines how IKL maintains educational quality,
+technical reliability and controlled platform evolution.
+Quality assurance is a continuous responsibility, not a
+final inspection performed only before publication.
+</p>
+
+<h3>9.2 Educational Content Quality Assurance</h3>
+<ul>
+<li>Factual accuracy.</li>
+<li>Clarity.</li>
+<li>Learning-level suitability.</li>
+<li>Completeness.</li>
+<li>Consistency with the 15-section structure.</li>
+<li>Correct use of examples.</li>
+<li>Appropriate visual explanations.</li>
+<li>Useful assessment and revision material.</li>
+<li>Relevant references.</li>
+</ul>
+
+<h3>9.3 Technical Quality Assurance</h3>
+<ul>
+<li>HTML structure.</li>
+<li>CSS behaviour.</li>
+<li>JavaScript execution.</li>
+<li>Navigation.</li>
+<li>Search.</li>
+<li>Links.</li>
+<li>Images and resources.</li>
+<li>Interactive features.</li>
+<li>Loading behaviour.</li>
+<li>Responsive presentation.</li>
+</ul>
+
+<h3>9.4 Automated Content Validation</h3>
+<p>Automated validation identifies missing files, metadata, incomplete sections, invalid data, broken relationships, version inconsistencies and publication-status problems.</p>
+<p>Automated checks support quality control but do not replace human educational review.</p>
+
+<h3>9.5 Automated Functional Testing</h3>
+<p>Functional testing checks the behaviour of important features, including navigation, search, concept pages, quizzes, simulations, progress mechanisms and shared functionality.</p>
+
+<h3>9.6 Regression Testing</h3>
+<p>Regression testing protects existing working features when changes are made. A new feature or modification is not successful if it silently damages an existing capability.</p>
+
+<h3>9.7 Accessibility and Responsive Testing</h3>
+<p>Quality assurance must check that the platform remains usable across supported devices and accessibility requirements.</p>
+
+<h3>9.8 Security and Privacy</h3>
+<p>Security and privacy checks must be considered before introducing accounts, learner records, integrations, external services or other features involving user information.</p>
+
+<h3>9.9 Version Control and Change Management</h3>
+<p>Changes must be traceable. Important changes should have a documented reason, approval status, test results and release record.</p>
+
+<h3>9.10 Backup and Recovery</h3>
+<p>The platform should preserve important source material and provide a documented approach to recovering from accidental deletion, corruption or unsuccessful changes.</p>
+
+<h3>9.11 Controlled Publishing</h3>
+<ol>
+<li>Prepare the authorised change.</li>
+<li>Complete required checks.</li>
+<li>Review the publishing candidate.</li>
+<li>Publish through the approved method.</li>
+<li>Confirm deployment.</li>
+<li>Inspect the published result.</li>
+<li>Record the release.</li>
+</ol>
+
+<h3>9.12 Post-Publication Monitoring</h3>
+<p>The quality lifecycle continues after deployment. Important pages, links, navigation and interactive features should be checked for problems.</p>
+
+<h3>9.13 Error Reporting and Maintenance</h3>
+<p>Issues should be recorded, prioritised, investigated, corrected, tested and verified.</p>
+
+<h3>9.14 Documentation and Release Records</h3>
+<p>Important architecture decisions, test outcomes, changes, releases and maintenance activities should remain documented.</p>
+
+<h3>9.15 Staged Automation Roadmap</h3>
+
+<div class="stage">
+<strong>STAGE 1 — Basic Validation</strong>
+<p>Check required files, content fields, completeness and basic data structure.</p>
+</div>
+
+<div class="stage">
+<strong>STAGE 2 — Functional Checks</strong>
+<p>Check important links, navigation, interactive features and common failures.</p>
+</div>
+
+<div class="stage">
+<strong>STAGE 3 — Publishing Safeguards</strong>
+<p>Require essential checks before release and protect existing functionality.</p>
+</div>
+
+<div class="stage">
+<strong>STAGE 4 — Monitoring and Maintenance</strong>
+<p>Monitor published pages, track issues and verify corrections.</p>
+</div>
+
+<div class="stage">
+<strong>STAGE 5 — Continuous Improvement</strong>
+<p>Review recurring errors and improve validation, testing and publishing processes.</p>
+</div>
+
+<h3>9.16 Human Oversight</h3>
+<p>
+Automation assists the quality process. It does not
+independently replace human judgement in educational accuracy,
+security, privacy, approval or important publishing decisions.
+</p>
+</section>
+
+<!-- PART VIII -->
+
+<section class="card">
+<h2>PART VIII — CROSS-LAYER ARCHITECTURE</h2>
+</section>
+
+<section class="card" id="s10">
+<h2>10. Responsibility Boundaries</h2>
+
+<p>Each layer has a distinct architectural ownership.</p>
+
+<table>
+<thead>
+<tr><th>Responsibility</th><th>Owning Layer</th></tr>
+</thead>
+<tbody>
+<tr><td>Learner-facing experience</td><td>Layer 1</td></tr>
+<tr><td>Concept teaching structure</td><td>Layer 2</td></tr>
+<tr><td>Authoritative educational data</td><td>Layer 3</td></tr>
+<tr><td>Reusable functionality</td><td>Layer 4</td></tr>
+<tr><td>Quality and publishing controls</td><td>Layer 5</td></tr>
+</tbody>
+</table>
+
+<h3>10.1 Boundary Rule</h3>
+<p>
+A layer may consume the outputs of another layer without
+taking ownership of that layer's responsibilities.
+</p>
+<ul>
+<li>Layer 2 consumes content from Layer 3.</li>
+<li>Layer 2 uses shared mechanisms from Layer 4.</li>
+<li>Layer 1 defines the intended learner experience.</li>
+<li>Layer 5 validates and protects the outputs of all layers.</li>
+</ul>
+
+<h3>10.2 Separation of Concerns</h3>
+<p>The architecture distinguishes between:</p>
+<ul>
+<li>What the learner experiences.</li>
+<li>How educational material is structured.</li>
+<li>Where authoritative knowledge is maintained.</li>
+<li>How reusable functionality operates.</li>
+<li>How quality and publication are controlled.</li>
+</ul>
+<p>This separation helps the platform evolve without making every change dependent on every other part.</p>
+</section>
+
+<section class="card" id="s11">
+<h2>11. End-to-End Knowledge Lifecycle</h2>
+
+<ol>
+<li><strong>Concept Identification:</strong> A concept is identified and assigned its identity and category.</li>
+<li><strong>Content Preparation:</strong> Educational material is prepared using the approved 15-section teaching structure.</li>
+<li><strong>Structured Representation:</strong> The concept's authoritative information is represented in the Layer 3 content model.</li>
+<li><strong>Registry Entry:</strong> The concept is registered with its permanent ID, name, slug, category, publication status, content path and content version.</li>
+<li><strong>Presentation:</strong> The concept-page architecture presents structured content through the reusable Layer 2 template.</li>
+<li><strong>Shared Functionality:</strong> The page uses relevant Layer 4 services, such as diagrams, assessments or simulations.</li>
+<li><strong>Quality Review:</strong> Layer 5 checks educational completeness, structural validity and technical behaviour.</li>
+<li><strong>Approval:</strong> Required human review and publication approval are completed.</li>
+<li><strong>Publishing:</strong> Authorised content and associated outputs are published through the approved process.</li>
+<li><strong>Monitoring and Improvement:</strong> The published concept is checked and maintained.</li>
+</ol>
+
+<div class="principle">
+A concept is not complete merely because its content has been
+written or its page has been generated. It must pass the
+appropriate quality and publication controls.
+</div>
+</section>
+
+<section class="card" id="s12">
+<h2>12. Concept Data and Rendering Relationship</h2>
+
+<p>The architecture establishes a clear distinction between content and presentation.</p>
+
+<ul>
+<li><strong>Authoritative content:</strong> structured concept data.</li>
+<li><strong>Content index:</strong> central concept registry.</li>
+<li><strong>Presentation structure:</strong> reusable Layer 2 concept-page template.</li>
+<li><strong>Shared behaviour:</strong> Layer 4 functionality.</li>
+<li><strong>Quality controls:</strong> Layer 5 validation and testing.</li>
+<li><strong>Published output:</strong> the learner-facing page.</li>
+</ul>
+
+<p>
+The content should remain maintainable independently of
+the code that displays it. Generated HTML should therefore
+be understood as an output, not the authoritative educational record.
+</p>
+</section>
+
+<section class="card" id="s13">
+<h2>13. Cross-Layer Quality Gates</h2>
+
+<h3>Gate 1 — Experience Readiness</h3>
+<p>Does the proposed feature support the intended learner experience?</p>
+
+<h3>Gate 2 — Structure Readiness</h3>
+<p>Does the feature follow the appropriate concept-page and presentation structure?</p>
+
+<h3>Gate 3 — Content Readiness</h3>
+<p>Is the authoritative content complete and structurally valid?</p>
+
+<h3>Gate 4 — Functionality Readiness</h3>
+<p>Do the required shared mechanisms work as intended?</p>
+
+<h3>Gate 5 — Quality and Release Readiness</h3>
+<p>Have the required reviews, tests, approvals and publishing checks been completed?</p>
+
+<div class="principle">
+These gates describe the intended governance model.
+Their exact technical automation and enforcement mechanisms
+remain implementation decisions.
+</div>
+</section>
+
+<section class="card" id="s14">
+<h2>14. Error and Dependency Management</h2>
+
+<p>
+The architecture recognises that components may depend on
+other components. Dependencies should be documented and
+kept as simple as practical.
+</p>
+
+<p>Examples include:</p>
+<ul>
+<li>Concept pages depending on concept data.</li>
+<li>Search depending on the concept registry.</li>
+<li>Interactive pages depending on shared engines.</li>
+<li>Publishing depending on successful validation.</li>
+<li>Learner-facing features depending on shared navigation.</li>
+</ul>
+
+<p>
+Where possible, optional features should fail independently.
+A failure in an optional simulation, for example, should not
+unnecessarily prevent a learner from reading the concept explanation.
+</p>
+</section>
+
+<!-- PART IX -->
+
+<section class="card">
+<h2>PART IX — PLATFORM-WIDE GOVERNANCE</h2>
+</section>
+
+<section class="card" id="s15">
+<h2>15. Design, Accessibility and User Experience Governance</h2>
+
+<p>
+All five layers must support a coherent visual and educational identity.
+</p>
+
+<h3>15.1 Visual Identity</h3>
+<ul>
+<li>Modern, light educational interface.</li>
+<li>Deep navy and blue identity.</li>
+<li>White and soft-light reading backgrounds.</li>
+<li>Electric-blue actions.</li>
+<li>Teal progress and success indicators.</li>
+<li>Amber notes and warnings.</li>
+<li>Rounded cards.</li>
+<li>Subtle shadows.</li>
+<li>Clear typography.</li>
+</ul>
+
+<h3>15.2 Brand and Identity</h3>
+<p>
+The platform should develop an original logo representing
+IKL as its own educational project.
+</p>
+<p><strong>Approved tagline:</strong> Explore. Understand. Experiment.</p>
+
+<h3>15.3 Creator Credit</h3>
+<p>Every page footer should include:</p>
+<div class="principle"><strong>Created by Amir Khan.</strong></div>
+
+<h3>15.4 Accessibility</h3>
+<p>Accessibility is a platform-wide requirement, not a responsibility confined to a single layer.</p>
+
+<h3>15.5 Device Support</h3>
+<p>The platform should support appropriate responsive experiences across devices, including mobile phones and tablets.</p>
+</section>
+
+<section class="card" id="s16">
+<h2>16. Privacy, Security and Responsible Design</h2>
+
+<p>IKL should adopt responsible practices as its capabilities grow.</p>
+
+<ul>
+<li>Collecting only necessary learner information.</li>
+<li>Explaining data collection and use.</li>
+<li>Protecting stored information.</li>
+<li>Reviewing third-party services.</li>
+<li>Avoiding exposure of credentials.</li>
+<li>Handling untrusted input safely.</li>
+<li>Reviewing dependencies and security risks.</li>
+<li>Providing appropriate user control over personal information.</li>
+</ul>
+
+<p>
+Any future feature involving accounts, personal records or
+external integrations must receive appropriate design and
+implementation review.
+</p>
+</section>
+
+<section class="card" id="s17">
+<h2>17. Content, Schema and Architecture Governance</h2>
+
+<h3>17.1 Content Change</h3>
+<p>A change to the educational information of a concept.</p>
+
+<h3>17.2 Schema Change</h3>
+<p>A change to the structure used to represent concept content.</p>
+
+<h3>17.3 Architecture Change</h3>
+<p>A change to the responsibilities, relationships or design of the platform's layers.</p>
+
+<p>
+These changes have different consequences and should be
+documented accordingly. A content update should not
+automatically imply a schema change. A schema change should
+not automatically imply that the entire platform architecture
+has changed.
+</p>
+</section>
+
+<section class="card" id="s18">
+<h2>18. Change Approval and Implementation Authority</h2>
+
+<p>
+The Master Architecture Bible defines the intended architecture.
+It does not grant automatic permission to implement every
+architectural decision.
+</p>
+
+<p>The following actions require separate authorisation:</p>
+<ul>
+<li>Repository restructuring.</li>
+<li>Renaming or moving existing files.</li>
+<li>Migrating existing content.</li>
+<li>Replacing existing page structures.</li>
+<li>Changing working functionality.</li>
+<li>Introducing new technical systems.</li>
+<li>Changing deployment procedures.</li>
+<li>Introducing data collection or external integrations.</li>
+</ul>
+
+<h3>18.1 Existing Project Protection</h3>
+<p>
+The existing GitHub Pages project and its working functionality
+must be treated as protected assets. Architectural planning
+must not silently become permission to alter the repository.
+</p>
+
+<h3>18.2 Approval Principle</h3>
+<div class="warning">
+<strong>Architecture approval, implementation approval and
+publication approval are separate decisions.</strong>
+</div>
+</section>
+
+<!-- PART X -->
+
+<section class="card">
+<h2>PART X — IMPLEMENTATION AND EVOLUTION STRATEGY</h2>
+</section>
+
+<section class="card" id="s19">
+<h2>19. Implementation Philosophy</h2>
+
+<p>
+IKL should evolve through controlled, understandable stages.
+The platform should not become unnecessarily complicated
+before its underlying concepts and workflows are understood.
+</p>
+
+<h3>19.1 Learn as You Create</h3>
+<p>The creator's learning journey is an important part of the project. Development should help the creator understand:</p>
+<ul>
+<li>The educational purpose of a feature.</li>
+<li>The architecture behind it.</li>
+<li>The technology used to create it.</li>
+<li>How its components work together.</li>
+<li>How to test it.</li>
+<li>How to document it.</li>
+<li>How to improve it.</li>
+</ul>
+
+<h3>19.2 Progressive Implementation</h3>
+<p>Future implementation should proceed in manageable stages. Each stage should have:</p>
+<ul>
+<li>A defined objective.</li>
+<li>A clear scope.</li>
+<li>An explanation of the purpose.</li>
+<li>A documented change.</li>
+<li>Appropriate testing.</li>
+<li>A review point.</li>
+<li>Explicit approval where required.</li>
+</ul>
+
+<h3>19.3 Practical Learning Environment</h3>
+<p>
+Instructions for the creator must account for the established
+working environment: an iPad using Safari and the GitHub website.
+Guidance should use explicit, small steps and should not assume
+access to a laptop, desktop, terminal or desktop-only application.
+</p>
+
+<h3>19.4 Preserve Working Functionality</h3>
+<p>
+Future development must protect the working homepage, search
+and existing concept pages unless a specific change has
+been authorised.
+</p>
+</section>
+
+<!-- PART XI -->
+
+<section class="card">
+<h2>PART XI — MASTER DOCUMENTATION AND TRACEABILITY</h2>
+</section>
+
+<section class="card" id="s20">
+<h2>20. Architecture Document Hierarchy</h2>
+
+<p>The Master Architecture Bible sits above the five individual layer documents.</p>
+
+<ol>
+<li><strong>IKL Master Architecture Bible</strong> — unified architecture and governance.</li>
+<li><strong>Layer 1 — Learner Experience</strong> — detailed learner requirements and decisions.</li>
+<li><strong>Layer 2 — Concept Page and Template</strong> — detailed teaching and page structure.</li>
+<li><strong>Layer 3 — Content and Data</strong> — detailed knowledge representation and registry rules.</li>
+<li><strong>Layer 4 — Shared Functionality</strong> — detailed shared service architecture.</li>
+<li><strong>Layer 5 — Quality, Automation and Publishing</strong> — detailed quality and release controls.</li>
+</ol>
+
+<p>
+The individual layer documents remain important.
+The Master Architecture Bible does not replace their
+detailed requirements.
+</p>
+</section>
+
+<section class="card" id="s21">
+<h2>21. Decision Traceability</h2>
+
+<p>Every major architectural requirement should be traceable to its originating layer.</p>
+
+<p>The traceability system should identify:</p>
+<ul>
+<li>Requirement or decision.</li>
+<li>Originating layer.</li>
+<li>Relevant section.</li>
+<li>Approval status.</li>
+<li>Related layers.</li>
+<li>Implementation status, if implementation is later authorised.</li>
+</ul>
+
+<h3>21.1 Layer 1 Traceability</h3>
+<p>
+All 126 original Layer 1 decisions remain covered by the
+official Layer 1 Consolidated Edition 2.0. The Master
+Architecture Bible preserves their nine-domain organisation
+and their platform-wide implications.
+</p>
+
+<h3>21.2 Other Layer Traceability</h3>
+<p>
+The detailed Layer 2, Layer 3, Layer 4 and Layer 5 documents
+remain the authoritative detailed references for their
+respective responsibilities.
+</p>
+</section>
+
+<section class="card" id="s22">
+<h2>22. Master Architecture Review and Change Control</h2>
+
+<p>
+The Master Architecture Bible should be reviewed whenever
+a significant architectural change is proposed.
+</p>
+
+<p>A review should consider:</p>
+<ul>
+<li>Whether the change affects one or multiple layers.</li>
+<li>Whether an existing approved decision is affected.</li>
+<li>Whether a responsibility boundary changes.</li>
+<li>Whether data structures or interfaces are affected.</li>
+<li>Whether quality controls need to change.</li>
+<li>Whether existing functionality could be damaged.</li>
+<li>Whether additional approval is required.</li>
+</ul>
+
+<p>Changes to the Master Architecture Bible should be versioned and documented.</p>
+</section>
+
+<!-- PART XII -->
+
+<section class="card">
+<h2>PART XII — CONSOLIDATED APPROVAL AND PROJECT STATUS</h2>
+</section>
+
+<section class="card" id="s23">
+<h2>23. Five-Layer Architecture Status</h2>
+
+<p>
+The following status distinguishes documented work from
+confirmed approval.
+</p>
+
+<table>
+<thead>
+<tr>
+<th>Architecture Document</th>
+<th>Consolidated Work</th>
+<th>Approval Record</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Layer 1 — Learner Experience</td>
+<td>Edition 2.0, 126 decisions</td>
+<td>Approved</td>
+</tr>
+<tr>
+<td>Layer 2 — Concept Page and Template</td>
+<td>Edition 1.0, 18 sections</td>
+<td>Approved</td>
+</tr>
+<tr>
+<td>Layer 3 — Content and Data</td>
+<td>Edition 1.0, 19 sections</td>
+<td>Explicit approval status to be confirmed</td>
+</tr>
+<tr>
+<td>Layer 4 — Shared Functionality</td>
+<td>Edition 1.0, 19 sections</td>
+<td>HTML conversion requested after text document</td>
+</tr>
+<tr>
+<td>Layer 5 — Quality, Automation and Publishing</td>
+<td>Edition 1.0, 19 sections</td>
+<td>Review status to be confirmed</td>
+</tr>
+</tbody>
+</table>
+
+<div class="warning">
+The status deliberately avoids treating the existence of
+an HTML document or a request for HTML conversion as automatic
+proof of every possible approval. The relevant layer documents
+remain the source of truth for their approval records.
+</div>
+</section>
+
+<section class="card" id="s24">
+<h2>24. Master Architecture Bible Approval</h2>
+
+<p>
+This Edition 1.0 document is submitted as the unified
+architecture consolidation for review.
+</p>
+
+<p>Its purpose is to:</p>
+<ul>
+<li>Bring all five layers into one coherent structure.</li>
+<li>Preserve the distinct responsibilities of each layer.</li>
+<li>Explain cross-layer relationships.</li>
+<li>Establish common governance principles.</li>
+<li>Define the concept lifecycle.</li>
+<li>Clarify quality and publishing controls.</li>
+<li>Protect existing working functionality.</li>
+<li>Provide a foundation for future controlled implementation.</li>
+</ul>
+
+<div class="boundary">
+<h3>Approval Status</h3>
+<p><strong>Master Architecture Bible Edition 1.0:</strong> Submitted for review.</p>
+<p><strong>Implementation status:</strong> Not authorised by this document.</p>
+</div>
+</section>
+
+<section class="card" id="s25">
+<h2>25. Final Architectural Statement</h2>
+
+<p>
+The Interactive Knowledge Lexicon is designed as a unified
+educational platform built around five complementary
+architectural responsibilities.
+</p>
+
+<p>Layer 1 defines the learner experience.</p>
+<p>Layer 2 defines how knowledge is taught through reusable concept pages.</p>
+<p>Layer 3 defines how knowledge is organised and represented.</p>
+<p>Layer 4 provides the shared functionality that supports learning.</p>
+<p>Layer 5 protects quality, reliability and controlled publishing.</p>
+
+<p>Together, these layers form the architectural foundation of IKL.</p>
+
+<p>
+The platform's purpose is not simply to present information.
+It is to help learners progressively understand, explore,
+practise, connect and apply knowledge.
+</p>
+
+<p>
+The architecture should remain understandable, modular,
+reusable, accessible and capable of evolving without
+compromising the existing working platform.
+</p>
+
+<div class="principle">
+<strong>
+IKL is intended to grow through deliberate learning,
+controlled building, continuous understanding and
+documented improvement.
+</strong>
+</div>
+</section>
+
+<!-- DOCUMENT CONTROL -->
+
+<section class="card">
+<h2>DOCUMENT CONTROL</h2>
+
+<div class="boundary">
+<p><strong>Project:</strong> Interactive Knowledge Lexicon</p>
+<p><strong>Document:</strong> Master Architecture Bible</p>
+<p><strong>Edition:</strong> 1.0 — Consolidated Draft</p>
+<p><strong>Date:</strong> 5 November 2026</p>
+<p><strong>Creator:</strong> Amir Khan</p>
+<p><strong>Tagline:</strong> Explore. Understand. Experiment.</p>
+<p><strong>Document status:</strong> Submitted for review.</p>
+<p><strong>Implementation authority:</strong> Not granted by this document.</p>
+<p><strong>Repository modification authority:</strong> Not granted by this document.</p>
+<p><strong>Publication authority:</strong> Requires separate approval.</p>
+</div>
+
+<h3>Guiding Development Cycle</h3>
+
+<div class="principle">
+<strong>
+Learn → Build → Understand → Document → Showcase → Monetise → Teach
+</strong>
+</div>
+
+<p style="text-align:center; margin-top:30px;">
+<strong>END OF MASTER ARCHITECTURE BIBLE — EDITION 1.0</strong>
+</p>
+</section>
+
+</main>
+
+<footer>
+<p>Interactive Knowledge Lexicon</p>
+<p>Explore. Understand. Experiment.</p>
+<p class="credit">Created by Amir Khan.</p>
+</footer>
+
+</body>
+</html>
