@@ -1,0 +1,1044 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interactive Knowledge Lexicon — Layer 2: Concept Page and Template Architecture.">
+  <title>IKL | Layer 2 — Concept Page and Template</title>
+
+  <style>
+    :root {
+      --navy: #142b4a;
+      --blue: #2463eb;
+      --light-blue: #edf4ff;
+      --teal: #0d9488;
+      --amber: #d97706;
+      --background: #f4f7fb;
+      --surface: #ffffff;
+      --text: #263449;
+      --muted: #64748b;
+      --border: #dce4ef;
+      --radius: 14px;
+      --shadow: 0 5px 20px rgba(20, 43, 74, 0.07);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.7;
+    }
+
+    a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #142b4a, #2457a6);
+      color: white;
+      padding: 58px 22px;
+      text-align: center;
+    }
+
+    .hero .eyebrow {
+      color: #c6dcff;
+      font-size: 0.85rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      max-width: 900px;
+      margin: 14px auto;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.2;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 14px auto;
+      color: #e3edff;
+      font-size: 1.05rem;
+    }
+
+    .hero .version {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 7px 15px;
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 30px;
+      font-size: 0.85rem;
+    }
+
+    .container {
+      width: min(1100px, 92%);
+      margin: 32px auto;
+    }
+
+    .notice {
+      padding: 20px;
+      background: var(--light-blue);
+      border-left: 5px solid var(--blue);
+      border-radius: 8px;
+      margin-bottom: 25px;
+    }
+
+    .notice strong {
+      color: var(--navy);
+    }
+
+    .status {
+      display: inline-block;
+      padding: 4px 11px;
+      border-radius: 20px;
+      background: #d9f4ed;
+      color: #087568;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 25px;
+      align-items: start;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 15px;
+      padding: 22px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .sidebar h2 {
+      margin-top: 0;
+      color: var(--navy);
+      font-size: 1.1rem;
+    }
+
+    .sidebar ol {
+      padding-left: 20px;
+      margin-bottom: 0;
+    }
+
+    .sidebar li {
+      margin: 7px 0;
+      font-size: 0.88rem;
+    }
+
+    main {
+      min-width: 0;
+    }
+
+    .section {
+      padding: 28px;
+      margin-bottom: 22px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      scroll-margin-top: 20px;
+    }
+
+    .section h2 {
+      margin-top: 0;
+      color: var(--navy);
+      font-size: 1.5rem;
+    }
+
+    .section h3 {
+      margin-top: 25px;
+      color: #2457a6;
+      font-size: 1.08rem;
+    }
+
+    .section-number {
+      display: inline-block;
+      margin-right: 8px;
+      color: var(--blue);
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+
+    .section p:last-child {
+      margin-bottom: 0;
+    }
+
+    .callout {
+      margin: 18px 0;
+      padding: 16px 18px;
+      background: #f0fdfa;
+      border-left: 4px solid var(--teal);
+      border-radius: 7px;
+    }
+
+    .warning {
+      background: #fff8eb;
+      border-left-color: var(--amber);
+    }
+
+    .principle-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .principle {
+      padding: 17px;
+      background: #f7f9fd;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .principle strong {
+      display: block;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .number-list {
+      padding-left: 24px;
+    }
+
+    .number-list li {
+      margin-bottom: 13px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin: 18px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 500px;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--light-blue);
+      color: var(--navy);
+    }
+
+    .approval {
+      padding: 22px;
+      background: #f0fdfa;
+      border: 1px solid #b8e9df;
+      border-radius: 12px;
+    }
+
+    footer {
+      margin-top: 45px;
+      padding: 30px 20px;
+      background: var(--navy);
+      color: white;
+      text-align: center;
+    }
+
+    footer p {
+      margin: 5px;
+    }
+
+    footer .tagline {
+      color: #c6dcff;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 800px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+        max-height: none;
+      }
+
+      .section {
+        padding: 21px;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      .hero {
+        background: white;
+        color: var(--navy);
+        border-bottom: 2px solid var(--navy);
+      }
+
+      .hero p, .hero .eyebrow {
+        color: var(--navy);
+      }
+
+      .layout {
+        display: block;
+      }
+
+      .sidebar {
+        position: static;
+        max-height: none;
+        box-shadow: none;
+        margin-bottom: 25px;
+      }
+
+      .section {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+
+      a {
+        color: inherit;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="hero">
+    <div class="eyebrow">Interactive Knowledge Lexicon</div>
+    <h1>Layer 2 — Concept Page and Template</h1>
+    <p>
+      The architectural blueprint defining how every technical concept
+      is structured, explained, presented and experienced by learners.
+    </p>
+    <span class="version">Edition 1.0 · Approved Architecture</span>
+  </header>
+
+  <div class="container">
+
+    <div class="notice">
+      <strong>Document purpose:</strong>
+      This document establishes the standard architecture for an IKL
+      concept page. It defines the teaching structure, presentation,
+      reusable template principles and quality requirements.
+      <br><br>
+      <span class="status">Architecture approved</span>
+      <span class="status">Implementation separate</span>
+    </div>
+
+    <div class="layout">
+
+      <nav class="sidebar" aria-label="Document contents">
+        <h2>Contents</h2>
+        <ol>
+          <li><a href="#s1">Purpose and Objectives</a></li>
+          <li><a href="#s2">Scope of Layer 2</a></li>
+          <li><a href="#s3">Core Page Architecture</a></li>
+          <li><a href="#s4">15-Section Teaching Structure</a></li>
+          <li><a href="#s5">Page Layout and Hierarchy</a></li>
+          <li><a href="#s6">Concept Identity and Navigation</a></li>
+          <li><a href="#s7">Educational Presentation</a></li>
+          <li><a href="#s8">Diagrams and Visual Learning</a></li>
+          <li><a href="#s9">Interactive Learning</a></li>
+          <li><a href="#s10">Assessment and Feedback</a></li>
+          <li><a href="#s11">Learning Continuity</a></li>
+          <li><a href="#s12">Reusable Template</a></li>
+          <li><a href="#s13">Accessibility and Devices</a></li>
+          <li><a href="#s14">Technical Architecture</a></li>
+          <li><a href="#s15">Quality Assurance</a></li>
+          <li><a href="#s16">Relationship Between Layers</a></li>
+          <li><a href="#s17">Implementation Boundaries</a></li>
+          <li><a href="#s18">Review and Approval</a></li>
+        </ol>
+      </nav>
+
+      <main>
+
+        <section class="section" id="s1">
+          <h2><span class="section-number">01</span>Purpose and Objectives</h2>
+
+          <p>
+            Layer 2 defines the architecture of an individual concept page
+            within the Interactive Knowledge Lexicon (IKL).
+          </p>
+
+          <p>
+            Its purpose is to ensure that every concept is taught through
+            a consistent, progressive, accessible and interactive
+            learning experience.
+          </p>
+
+          <h3>Primary objectives</h3>
+          <ul>
+            <li>Establish one consistent structure for concept pages.</li>
+            <li>Explain technical ideas from simple to advanced levels.</li>
+            <li>Connect explanations with analogies and practical examples.</li>
+            <li>Support visual learning through diagrams and flowcharts.</li>
+            <li>Provide meaningful interactive learning experiences.</li>
+            <li>Make concept pages reusable and maintainable.</li>
+            <li>Maintain consistent quality across the lexicon.</li>
+          </ul>
+
+          <div class="callout">
+            <strong>Core principle:</strong>
+            A concept page should not merely define a technical term.
+            It should guide a learner from unfamiliarity to understanding.
+          </div>
+        </section>
+
+        <section class="section" id="s2">
+          <h2><span class="section-number">02</span>Scope of Layer 2</h2>
+
+          <p>
+            Layer 2 governs the structure and presentation of individual
+            concept pages. It defines how the learner encounters and
+            progresses through a concept.
+          </p>
+
+          <h3>Included responsibilities</h3>
+          <ul>
+            <li>Concept page structure and section order.</li>
+            <li>Content hierarchy and presentation.</li>
+            <li>Visual and interactive learning components.</li>
+            <li>Reusable page-template principles.</li>
+            <li>Navigation within a concept page.</li>
+            <li>Accessibility and responsive presentation.</li>
+            <li>Quality requirements for concept pages.</li>
+          </ul>
+
+          <h3>Outside the scope of this layer</h3>
+          <ul>
+            <li>Overall learner-experience strategy, governed by Layer 1.</li>
+            <li>Authoritative content storage and registry rules, governed by Layer 3.</li>
+            <li>Shared application functionality, governed by Layer 4.</li>
+            <li>Automated testing and publishing systems, governed by Layer 5.</li>
+          </ul>
+        </section>
+
+        <section class="section" id="s3">
+          <h2><span class="section-number">03</span>Core Concept Page Architecture</h2>
+
+          <p>
+            Every concept page follows a common architectural pattern.
+            The educational content changes from concept to concept,
+            but the underlying page structure remains consistent.
+          </p>
+
+          <div class="principle-grid">
+            <div class="principle">
+              <strong>Concept identity</strong>
+              Identifies the subject, category and learning context.
+            </div>
+            <div class="principle">
+              <strong>Learning introduction</strong>
+              Establishes what the learner is about to understand.
+            </div>
+            <div class="principle">
+              <strong>Teaching sections</strong>
+              Progressively explain the concept.
+            </div>
+            <div class="principle">
+              <strong>Learning activities</strong>
+              Help learners explore, practise and test understanding.
+            </div>
+            <div class="principle">
+              <strong>Concept connections</strong>
+              Connect the subject to the wider knowledge system.
+            </div>
+            <div class="principle">
+              <strong>Revision and continuity</strong>
+              Reinforce learning and guide the next step.
+            </div>
+          </div>
+
+          <h3>Architectural consistency</h3>
+          <p>
+            A learner should recognise the same general page organisation
+            when moving from Ping to Process, API, Encryption or another
+            technical concept.
+          </p>
+        </section>
+
+        <section class="section" id="s4">
+          <h2><span class="section-number">04</span>The Approved 15-Section Teaching Structure</h2>
+
+          <p>
+            Every concept uses the approved 15-section teaching structure.
+            The depth and examples are adapted to the topic, while the
+            overall learning progression remains consistent.
+          </p>
+
+          <ol class="number-list">
+            <li>
+              <strong>Concept Identity and Definition</strong><br>
+              Introduces the concept, its category and a clear definition.
+            </li>
+            <li>
+              <strong>First-Grader Explanation</strong><br>
+              Explains the idea using very simple language.
+            </li>
+            <li>
+              <strong>Analogy and Mental Model</strong><br>
+              Connects the unfamiliar concept to a familiar real-world idea.
+            </li>
+            <li>
+              <strong>Beginner Explanation</strong><br>
+              Builds a basic but accurate understanding.
+            </li>
+            <li>
+              <strong>Technical Explanation</strong><br>
+              Introduces correct technical terminology and deeper detail.
+            </li>
+            <li>
+              <strong>Components and Architecture</strong><br>
+              Identifies the important parts and how they relate.
+            </li>
+            <li>
+              <strong>Working Mechanism</strong><br>
+              Explains how the concept operates step by step.
+            </li>
+            <li>
+              <strong>Interactive Simulation</strong><br>
+              Allows learners to explore or manipulate a simplified model.
+            </li>
+            <li>
+              <strong>Flowchart and Sequence Diagram</strong><br>
+              Shows processes, decisions and relationships visually.
+            </li>
+            <li>
+              <strong>Practical Example</strong><br>
+              Demonstrates how the concept appears in real situations.
+            </li>
+            <li>
+              <strong>Common Mistakes and Misconceptions</strong><br>
+              Corrects misunderstandings and misleading assumptions.
+            </li>
+            <li>
+              <strong>Limitations and Troubleshooting</strong><br>
+              Explains boundaries, failure conditions and possible solutions.
+            </li>
+            <li>
+              <strong>Connections to Other Concepts</strong><br>
+              Links the topic to related and prerequisite knowledge.
+            </li>
+            <li>
+              <strong>Knowledge Assessment</strong><br>
+              Checks whether the learner understands the key ideas.
+            </li>
+            <li>
+              <strong>Quick Revision</strong><br>
+              Provides a concise recap of the most important points.
+            </li>
+          </ol>
+
+          <div class="callout">
+            <strong>Teaching progression:</strong>
+            Simple understanding → mental model → beginner knowledge →
+            technical depth → exploration → application → assessment.
+          </div>
+        </section>
+
+        <section class="section" id="s5">
+          <h2><span class="section-number">05</span>Standard Page Layout and Visual Hierarchy</h2>
+
+          <p>
+            The page layout must make the learning journey clear.
+            Learners should be able to identify the concept, understand
+            where they are and find the next section without confusion.
+          </p>
+
+          <h3>Standard layout elements</h3>
+          <ul>
+            <li>Concept title and identity.</li>
+            <li>Category and concept identifier.</li>
+            <li>Short introductory explanation.</li>
+            <li>Section navigation or contents list.</li>
+            <li>Clearly separated teaching sections.</li>
+            <li>Visuals and interactive elements within relevant sections.</li>
+            <li>Related concepts and learning navigation.</li>
+            <li>Revision and assessment areas.</li>
+          </ul>
+
+          <h3>Visual hierarchy</h3>
+          <p>
+            Headings, subheadings, paragraphs, lists, diagrams and callouts
+            should have consistent visual roles. Colour and decoration
+            must support understanding rather than distract from it.
+          </p>
+        </section>
+
+        <section class="section" id="s6">
+          <h2><span class="section-number">06</span>Concept Identity and Navigation</h2>
+
+          <p>
+            Every concept page must have a recognisable identity and a
+            predictable way for learners to navigate its content.
+          </p>
+
+          <h3>Concept identity information</h3>
+          <ul>
+            <li>Concept name.</li>
+            <li>Permanent concept identifier.</li>
+            <li>Category or subject area.</li>
+            <li>Short description.</li>
+            <li>Publication status where appropriate.</li>
+          </ul>
+
+          <h3>Navigation requirements</h3>
+          <ul>
+            <li>Clear access to the concept's sections.</li>
+            <li>Consistent links back to relevant category or discovery areas.</li>
+            <li>Links to related concepts where relevant.</li>
+            <li>Predictable movement between learning sections.</li>
+          </ul>
+        </section>
+
+        <section class="section" id="s7">
+          <h2><span class="section-number">07</span>Educational Content Presentation</h2>
+
+          <p>
+            Content must be technically accurate while remaining
+            understandable to learners who are encountering a topic
+            for the first time.
+          </p>
+
+          <h3>Presentation principles</h3>
+          <ul>
+            <li>Introduce unfamiliar terms before relying on them.</li>
+            <li>Use short explanations where possible.</li>
+            <li>Explain why a concept matters, not only what it means.</li>
+            <li>Use examples that connect theory to practice.</li>
+            <li>Distinguish simplified explanations from technical precision.</li>
+            <li>Use consistent terminology throughout the page.</li>
+            <li>Adapt the depth of explanation to the concept.</li>
+          </ul>
+
+          <div class="callout">
+            Simplicity must not introduce technical inaccuracies.
+            A beginner-friendly explanation should be an accessible
+            route to the correct technical understanding.
+          </div>
+        </section>
+
+        <section class="section" id="s8">
+          <h2><span class="section-number">08</span>Diagrams, Flowcharts and Visual Learning</h2>
+
+          <p>
+            Visuals should explain relationships, structures, sequences
+            and mechanisms that are difficult to understand through
+            text alone.
+          </p>
+
+          <h3>Suitable visual formats</h3>
+          <ul>
+            <li>Architecture diagrams.</li>
+            <li>Process flowcharts.</li>
+            <li>Sequence diagrams.</li>
+            <li>Comparison diagrams.</li>
+            <li>Memory and data-structure illustrations.</li>
+            <li>Step-by-step visual demonstrations.</li>
+          </ul>
+
+          <h3>Visual quality requirements</h3>
+          <ul>
+            <li>Every visual must have a clear teaching purpose.</li>
+            <li>Labels and relationships must be understandable.</li>
+            <li>Diagrams must remain readable on smaller screens.</li>
+            <li>Important information must not exist only in an image.</li>
+            <li>Text alternatives should be provided where needed.</li>
+          </ul>
+
+          <p>
+            SVG and Mermaid are suitable options for diagrams and
+            flowcharts, subject to the requirements of each visual.
+          </p>
+        </section>
+
+        <section class="section" id="s9">
+          <h2><span class="section-number">09</span>Interactive Learning and Simulations</h2>
+
+          <p>
+            Interactive components should help learners investigate
+            how a concept behaves. They should not exist merely as
+            decoration.
+          </p>
+
+          <h3>Potential interactive elements</h3>
+          <ul>
+            <li>Step-by-step process demonstrations.</li>
+            <li>Adjustable input and output simulations.</li>
+            <li>Clickable architecture diagrams.</li>
+            <li>Memory or address translation demonstrations.</li>
+            <li>Interactive comparisons.</li>
+            <li>Knowledge-check activities.</li>
+          </ul>
+
+          <h3>Interaction requirements</h3>
+          <ul>
+            <li>Explain what the learner can do.</li>
+            <li>Make the result of an action understandable.</li>
+            <li>Provide feedback where appropriate.</li>
+            <li>Allow recovery from mistakes.</li>
+            <li>Work with supported touch and keyboard interaction.</li>
+            <li>Do not make essential learning dependent on an interaction.</li>
+          </ul>
+        </section>
+
+        <section class="section" id="s10">
+          <h2><span class="section-number">10</span>Knowledge Assessment and Feedback</h2>
+
+          <p>
+            Assessment helps learners determine whether they have
+            understood the concept and which areas need further attention.
+          </p>
+
+          <h3>Assessment approaches</h3>
+          <ul>
+            <li>Multiple-choice questions.</li>
+            <li>True-or-false questions.</li>
+            <li>Concept identification.</li>
+            <li>Scenario-based questions.</li>
+            <li>Step-ordering activities.</li>
+            <li>Application and reasoning questions.</li>
+          </ul>
+
+          <h3>Feedback principles</h3>
+          <ul>
+            <li>Explain why an answer is correct or incorrect.</li>
+            <li>Connect feedback to the relevant teaching material.</li>
+            <li>Encourage understanding rather than guessing.</li>
+            <li>Avoid presenting a score as the only measure of learning.</li>
+          </ul>
+        </section>
+
+        <section class="section" id="s11">
+          <h2><span class="section-number">11</span>Progress and Learning Continuity</h2>
+
+          <p>
+            A concept page should help learners understand their position
+            within the learning journey and identify meaningful next steps.
+          </p>
+
+          <h3>Learning continuity principles</h3>
+          <ul>
+            <li>Make the page structure predictable.</li>
+            <li>Provide clear section navigation.</li>
+            <li>Connect prerequisite and related concepts.</li>
+            <li>Support revision and return visits.</li>
+            <li>Connect concept learning to the wider IKL experience.</li>
+          </ul>
+
+          <p>
+            Any learner-wide progress tracking or persistent records
+            belong to the broader functionality and data layers.
+            This layer defines how a concept page presents and supports
+            learning continuity.
+          </p>
+        </section>
+
+        <section class="section" id="s12">
+          <h2><span class="section-number">12</span>Reusability and Template Architecture</h2>
+
+          <p>
+            The concept page must be designed around reusable structures.
+            A new concept should not require the entire page layout to be
+            recreated from the beginning.
+          </p>
+
+          <h3>Reusable elements</h3>
+          <ul>
+            <li>Concept identity and introduction.</li>
+            <li>Teaching section presentation.</li>
+            <li>Definition and analogy components.</li>
+            <li>Diagram and simulation containers.</li>
+            <li>Example and callout components.</li>
+            <li>Assessment and revision presentation.</li>
+            <li>Related-concept navigation.</li>
+          </ul>
+
+          <h3>Separation of responsibilities</h3>
+          <p>
+            The reusable template determines how information is presented.
+            The concept's own content determines what information is shown.
+            Shared application functionality is handled by the appropriate
+            application layer.
+          </p>
+
+          <div class="callout">
+            <strong>Reusability principle:</strong>
+            One consistent template should support many different concepts
+            without forcing every concept to have identical educational
+            examples or identical interactive components.
+          </div>
+        </section>
+
+        <section class="section" id="s13">
+          <h2><span class="section-number">13</span>Responsive Design and Accessibility</h2>
+
+          <p>
+            Concept pages must remain usable across supported screen sizes
+            and input methods.
+          </p>
+
+          <h3>Responsive requirements</h3>
+          <ul>
+            <li>Adapt layouts to smaller screens.</li>
+            <li>Keep text readable without unnecessary horizontal scrolling.</li>
+            <li>Ensure diagrams fit the available viewing area.</li>
+            <li>Make interactive controls suitable for touch.</li>
+            <li>Preserve a clear reading order.</li>
+          </ul>
+
+          <h3>Accessibility requirements</h3>
+          <ul>
+            <li>Use meaningful heading levels.</li>
+            <li>Provide appropriate text alternatives for informative visuals.</li>
+            <li>Maintain sufficient text and control contrast.</li>
+            <li>Make interactive controls identifiable and usable.</li>
+            <li>Do not communicate meaning through colour alone.</li>
+            <li>Support keyboard access where applicable.</li>
+          </ul>
+        </section>
+
+        <section class="section" id="s14">
+          <h2><span class="section-number">14</span>Technical Architecture and Implementation Considerations</h2>
+
+          <p>
+            Layer 2 establishes the presentation and template requirements.
+            It works with the structured content defined by Layer 3 and
+            the shared functionality defined by Layer 4.
+          </p>
+
+          <h3>Technology responsibilities</h3>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Technology</th>
+                  <th>Primary responsibility</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>HTML</td>
+                  <td>Page structure and semantic content areas.</td>
+                </tr>
+                <tr>
+                  <td>CSS</td>
+                  <td>Layout, visual presentation and responsive styling.</td>
+                </tr>
+                <tr>
+                  <td>JavaScript</td>
+                  <td>Rendering, interaction and page behaviour.</td>
+                </tr>
+                <tr>
+                  <td>JSON</td>
+                  <td>Structured concept content and configuration.</td>
+                </tr>
+                <tr>
+                  <td>SVG / Mermaid</td>
+                  <td>Diagrams, flowcharts and visual explanations.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Separation of content and presentation</h3>
+          <ul>
+            <li>Concept information should be maintained separately from presentation code.</li>
+            <li>The reusable page architecture should interpret structured content.</li>
+            <li>Interactive components should have defined responsibilities.</li>
+            <li>Changes to one concept should not unnecessarily affect others.</li>
+          </ul>
+
+          <div class="callout warning">
+            The technology choices above describe the approved architectural
+            direction. They do not authorise repository restructuring,
+            migration, file creation or code changes.
+          </div>
+        </section>
+
+        <section class="section" id="s15">
+          <h2><span class="section-number">15</span>Quality Assurance and Approval Requirements</h2>
+
+          <p>
+            A concept page should be evaluated for educational quality,
+            technical accuracy, usability and consistency before publication.
+          </p>
+
+          <h3>Quality checks</h3>
+          <ul>
+            <li>Correct concept identity and definition.</li>
+            <li>All 15 teaching sections accounted for.</li>
+            <li>Logical progression from simple to technical explanations.</li>
+            <li>Accurate analogies and practical examples.</li>
+            <li>Relevant and readable diagrams.</li>
+            <li>Functional and understandable interactions.</li>
+            <li>Useful assessment and feedback.</li>
+            <li>Working navigation and related-concept links.</li>
+            <li>Responsive presentation and accessibility.</li>
+            <li>Consistent visual identity.</li>
+          </ul>
+
+          <h3>Publication principle</h3>
+          <p>
+            A concept should not be treated as complete merely because
+            its page exists. Its educational content and required
+            functionality must satisfy the relevant quality checks.
+          </p>
+        </section>
+
+        <section class="section" id="s16">
+          <h2><span class="section-number">16</span>Relationship with the Other IKL Layers</h2>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Layer</th>
+                  <th>Responsibility</th>
+                  <th>Relationship to Layer 2</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Layer 1</td>
+                  <td>Learner Experience</td>
+                  <td>Defines the learner experience that concept pages must support.</td>
+                </tr>
+                <tr>
+                  <td>Layer 2</td>
+                  <td>Concept Page and Template</td>
+                  <td>Defines how individual concepts are taught and presented.</td>
+                </tr>
+                <tr>
+                  <td>Layer 3</td>
+                  <td>Content and Data</td>
+                  <td>Defines authoritative structured concept information and relationships.</td>
+                </tr>
+                <tr>
+                  <td>Layer 4</td>
+                  <td>Shared Functionality</td>
+                  <td>Provides shared application behaviour used by concept pages.</td>
+                </tr>
+                <tr>
+                  <td>Layer 5</td>
+                  <td>Quality, Automation and Publishing</td>
+                  <td>Supports validation, testing and reliable publication.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            The five layers form one connected architecture. Each layer
+            has its own responsibilities, while contributing to the
+            same learner-facing product.
+          </p>
+        </section>
+
+        <section class="section" id="s17">
+          <h2><span class="section-number">17</span>Implementation Boundaries</h2>
+
+          <p>
+            Approval of this architecture establishes the governing
+            direction for Layer 2. It does not automatically authorise
+            changes to the existing GitHub repository.
+          </p>
+
+          <h3>Implementation must remain controlled</h3>
+          <ul>
+            <li>Do not restructure existing files without approval.</li>
+            <li>Do not replace working pages without approval.</li>
+            <li>Do not migrate existing content without approval.</li>
+            <li>Do not introduce a new framework without approval.</li>
+            <li>Preserve working functionality while planning improvements.</li>
+            <li>Explain the purpose and impact of implementation steps.</li>
+          </ul>
+
+          <div class="callout warning">
+            <strong>Important distinction:</strong>
+            Architectural approval means the design direction is accepted.
+            Repository changes and implementation actions remain separate
+            decisions.
+          </div>
+        </section>
+
+        <section class="section" id="s18">
+          <h2><span class="section-number">18</span>Review and Approval Record</h2>
+
+          <div class="approval">
+            <h3>Layer 2 — Concept Page and Template</h3>
+            <p><strong>Edition:</strong> 1.0</p>
+            <p><strong>Project:</strong> Interactive Knowledge Lexicon</p>
+            <p><strong>Status:</strong> Approved architecture direction</p>
+            <p>
+              <strong>Approval basis:</strong>
+              The user approved the Layer 2 direction and authorised
+              the assistant to lead the project in accordance with
+              the established IKL guidelines.
+            </p>
+            <p>
+              <strong>Implementation status:</strong>
+              This document records the architecture. It does not
+              independently authorise repository restructuring or
+              implementation.
+            </p>
+          </div>
+
+          <h3>Architectural completion criteria</h3>
+          <ul>
+            <li>The concept page has a consistent structure.</li>
+            <li>The 15-section teaching model is preserved.</li>
+            <li>Content and presentation responsibilities are separated.</li>
+            <li>Visual and interactive learning are supported.</li>
+            <li>Accessibility and responsive requirements are defined.</li>
+            <li>The relationship with all five layers is clear.</li>
+          </ul>
+
+          <h3>Next architectural milestone</h3>
+          <p>
+            Layer 3 — Content and Data: the authoritative structure
+            for concept information, the concept registry, shared
+            resources, relationships, versioning and validation.
+          </p>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <footer>
+    <p><strong>Interactive Knowledge Lexicon</strong></p>
+    <p class="tagline">Explore. Understand. Experiment.</p>
+    <p>Created by Amir Khan.</p>
+  </footer>
+
+</body>
+</html>
